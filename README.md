@@ -1,9 +1,4 @@
-<div  align="center">
 [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors)
-<img src="" />
-<br />
-</div>
-<br />
 
 Semantic-live introduces a semantic composer sidebar into Visual Studio Code.
 
