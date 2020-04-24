@@ -23,7 +23,7 @@
 	  "theme": "dark"
 	},
 	"preview": true,
-	"main": "./out/extesnion/extension.js",
+	"main": "./out/extension/extension.js",
 	"contributes": {
 		"commands": [
 			{
@@ -39,8 +39,8 @@
 			"editor/title": [
 				{
 					"when": "resourceLangId == md",
-					"command": "markdown-live:showPanel",
-					"alt": "markdown-live:showPanel",
+					"command": "markdown-live.showPanel",
+					"alt": "markdown-live.showPanel",
 					"group": "navigation"
 				}
 			]
