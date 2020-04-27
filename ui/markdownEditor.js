@@ -34,8 +34,8 @@
   function buildEditor(value) {
     const instance = new tui.Editor({
       el: document.querySelector('#editorSection'),
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'tab',
       height: 'auto',
       initialValue: value,
       exts: ['scrollSync', 'chart', 'uml'],
