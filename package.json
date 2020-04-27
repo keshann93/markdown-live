@@ -2,7 +2,7 @@
   "name": "markdown-live",
   "displayName": "Markdown Live",
   "description": "real-time markdown UI composer",
-  "publisher": "keshan",
+  "publisher": "keshshan",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.44.0"

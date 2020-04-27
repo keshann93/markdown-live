@@ -6,6 +6,14 @@ Markdown-live introduces a Markdown editor into Visual Studio Code.
 
 The markdown editor integrated is [tui.editor](https://github.com/nhn/tui.editor)
 
+## Getting started
+
+- Install the [markdown-live](https://marketplace.visualstudio.com/items?itemName=keshshan.markdown-live) extension in VS Code
+- After opening a `.md` you should see it will open-up with WYSIWYG format where you can edit the files directly
+- You can switch between the markdown/WYSIWYG views easily from the right bottom top selection option
+- In markdown view you can still preview the markdown file by clicking the preview tab
+- Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
+
 ## Contributing
 
 Have a look at our [contribution guide](./contributing.md).
