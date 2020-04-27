@@ -7,6 +7,9 @@
     "trailingComma": "es5",
     "bracketSpacing": true,
     "arrowParens": "avoid",
-    "insertPragma": false
+    "insertPragma": false,
+    "options": {
+      "parser": "babel-ts"
+    }
   }
   
