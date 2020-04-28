@@ -2,6 +2,8 @@
 
 Markdown-live introduces a Markdown editor into Visual Studio Code.
 
+ <img src="https://s4.gifyu.com/images/markdown-live-demo.md.gif">
+
 ## Acknowledgment
 
 The markdown editor integrated is [tui.editor](https://github.com/nhn/tui.editor)
