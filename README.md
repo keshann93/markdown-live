@@ -2,7 +2,7 @@
 
 Markdown-live introduces a Markdown editor into Visual Studio Code.
 
- <img src="https://s4.gifyu.com/images/markdown-live-demo.md.gif">
+ <img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo.gif">
 
 ## Acknowledgment
 
