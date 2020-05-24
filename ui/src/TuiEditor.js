@@ -12,7 +12,7 @@ import './override-codemirror.css';
 import './override-codemirror-light.css';
 import './override-hljs.css';
 import remark from 'remark';
-import unotesRemarkPlugin from './unotesRemarkPlugin';
+import markdownRemarkPlugin from './markdownRemarkPlugin';
 import { debounce } from 'debounce';
 
 // root for local images
@@ -232,7 +232,7 @@ class TuiEditor extends Component {
         break;
       case 'remarkSettings':
         this.remarkSettings = e.data.settings;
-        this.remarkPlugin = unotesRemarkPlugin(this.remarkSettings);
+        this.remarkPlugin = markdownRemarkPlugin(this.remarkSettings);
         break;
       case 'toggleMode':
         if (!this.state.editor.isWysiwygMode()) {
