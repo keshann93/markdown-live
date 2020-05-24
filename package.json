@@ -11,7 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCustomEditor:markdown-live.showEditor"
+    "onCustomEditor:markdown-live.showMarkdown"
   ],
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "contributes": {
     "customEditors": [
       {
-        "viewType": "markdown-live.showEditor",
+        "viewType": "markdown-live.showMarkdown",
         "displayName": "Markdown Live Panel",
         "selector": [
           {
@@ -38,29 +38,29 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "Unotes",
+      "title": "Markdown Live",
       "properties": {
-        "unotes.editor.display2X": {
+        "markdown-live.editor.display2X": {
           "type": "boolean",
           "default": false,
           "markdownDescription": "Display toolbar buttons at 2X size"
         },
-        "unotes.editor.convertPastedImages": {
+        "markdown-live.editor.convertPastedImages": {
           "type": "boolean",
           "default": false,
           "markdownDescription": "Convert pasted images to local files"
         },
-        "unotes.rootPath": {
+        "markdown-live.rootPath": {
           "type": "string",
           "default": null,
           "markdownDescription": "Root path of notes"
         },
-        "unotes.noteFileExtension": {
+        "markdown-live.noteFileExtension": {
           "type": "string",
           "default": ".md",
           "markdownDescription": "The file extension used to filter and save note files. Default: .md"
         },
-        "unotes.mediaFolder": {
+        "markdown-live.mediaFolder": {
           "type": "string",
           "default": ".media",
           "markdownDescription": "The folder where images are saved relative to the note"
@@ -69,8 +69,8 @@
     },
     "colors": [
       {
-        "id": "unotes.wysText",
-        "description": "Unotes wysiwyg text",
+        "id": "markdown.wysText",
+        "description": "Markdown Live wysiwyg text",
         "defaults": {
           "dark": "editor.foreground",
           "light": "editor.foreground",
@@ -78,8 +78,8 @@
         }
       },
       {
-        "id": "unotes.wysH1",
-        "description": "Unotes wysiwyg heading 1",
+        "id": "markdown.wysH1",
+        "description": "Markdown Live wysiwyg heading 1",
         "defaults": {
           "dark": "#fff",
           "light": "#333",
@@ -87,8 +87,8 @@
         }
       },
       {
-        "id": "unotes.wysH2",
-        "description": "Unotes wysiwyg heading 2",
+        "id": "markdown.wysH2",
+        "description": "Markdown Live wysiwyg heading 2",
         "defaults": {
           "dark": "titleBar.activeForeground",
           "light": "titleBar.activeForeground",
@@ -96,8 +96,8 @@
         }
       },
       {
-        "id": "unotes.wysH3H4",
-        "description": "Unotes wysiwyg heading 3 and 4",
+        "id": "markdown.wysH3H4",
+        "description": "Markdown Live wysiwyg heading 3 and 4",
         "defaults": {
           "dark": "titleBar.inactiveForeground",
           "light": "titleBar.inactiveForeground",
@@ -105,8 +105,8 @@
         }
       },
       {
-        "id": "unotes.wysH5H6",
-        "description": "Unotes wysiwyg heading 5 and 6",
+        "id": "markdown.wysH5H6",
+        "description": "Markdown Live wysiwyg heading 5 and 6",
         "defaults": {
           "dark": "titleBar.inactiveForeground",
           "light": "titleBar.inactiveForeground",
@@ -114,8 +114,8 @@
         }
       },
       {
-        "id": "unotes.wysBlockquote",
-        "description": "Unotes wysiwyg blockquote",
+        "id": "markdown.wysBlockquote",
+        "description": "Markdown Live wysiwyg blockquote",
         "defaults": {
           "dark": "editorGutter.commentRangeForeground",
           "light": "editorGutter.commentRangeForeground",
@@ -123,8 +123,8 @@
         }
       },
       {
-        "id": "unotes.wysCodeBlockBackground",
-        "description": "Unotes wysiwyg code block background",
+        "id": "markdown.wysCodeBlockBackground",
+        "description": "Markdown Live wysiwyg code block background",
         "defaults": {
           "dark": "textBlockQuote.background",
           "light": "textBlockQuote.background",
@@ -132,8 +132,8 @@
         }
       },
       {
-        "id": "unotes.wysCodeBlockText",
-        "description": "Unotes wysiwyg code block text",
+        "id": "markdown.wysCodeBlockText",
+        "description": "Markdown Live wysiwyg code block text",
         "defaults": {
           "dark": "editor.foreground",
           "light": "editor.foreground",
@@ -141,8 +141,8 @@
         }
       },
       {
-        "id": "unotes.wysHighlight",
-        "description": "Unotes wysiwyg highlight / inline code",
+        "id": "markdown.wysHighlight",
+        "description": "Markdown Live wysiwyg highlight / inline code",
         "defaults": {
           "dark": "textPreformat.foreground",
           "light": "textPreformat.foreground",
@@ -150,8 +150,8 @@
         }
       },
       {
-        "id": "unotes.wysTableText",
-        "description": "Unotes wysiwyg table text",
+        "id": "markdown.wysTableText",
+        "description": "Markdown Live wysiwyg table text",
         "defaults": {
           "dark": "#BBBBBB",
           "light": "#505050",
@@ -159,8 +159,8 @@
         }
       },
       {
-        "id": "unotes.wysTableTdBorder",
-        "description": "Unotes wysiwyg table cell border",
+        "id": "markdown.wysTableTdBorder",
+        "description": "Markdown Live wysiwyg table cell border",
         "defaults": {
           "dark": "#313131",
           "light": "#313131",
@@ -168,8 +168,8 @@
         }
       },
       {
-        "id": "unotes.wysTableThBorder",
-        "description": "Unotes wysiwyg table header border",
+        "id": "markdown.wysTableThBorder",
+        "description": "Markdown Live wysiwyg table header border",
         "defaults": {
           "dark": "#72777b",
           "light": "#72777b",
@@ -177,8 +177,8 @@
         }
       },
       {
-        "id": "unotes.wysTableThBackground",
-        "description": "Unotes wysiwyg table header background",
+        "id": "markdown.wysTableThBackground",
+        "description": "Markdown Live wysiwyg table header background",
         "defaults": {
           "dark": "#484b4d",
           "light": "#484b4d",
@@ -186,8 +186,8 @@
         }
       },
       {
-        "id": "unotes.wysTableThText",
-        "description": "Unotes wysiwyg table header text",
+        "id": "markdown.wysTableThText",
+        "description": "Markdown Live wysiwyg table header text",
         "defaults": {
           "dark": "#fff",
           "light": "#fff",
@@ -195,8 +195,8 @@
         }
       },
       {
-        "id": "unotes.wysList",
-        "description": "Unotes wysiwyg list text",
+        "id": "markdown.wysList",
+        "description": "Markdown Live wysiwyg list text",
         "defaults": {
           "dark": "#BDBDBD",
           "light": "#686868",
@@ -204,8 +204,8 @@
         }
       },
       {
-        "id": "unotes.wysLink",
-        "description": "Unotes wysiwyg link",
+        "id": "markdown.wysLink",
+        "description": "Markdown Live wysiwyg link",
         "defaults": {
           "dark": "textLink.foreground",
           "light": "textLink.foreground",
@@ -213,8 +213,8 @@
         }
       },
       {
-        "id": "unotes.wysLinkHover",
-        "description": "Unotes wysiwyg hover link",
+        "id": "markdown.wysLinkHover",
+        "description": "Markdown Live wysiwyg hover link",
         "defaults": {
           "dark": "textLink.activeForeground",
           "light": "textLink.activeForeground",
@@ -222,8 +222,8 @@
         }
       },
       {
-        "id": "unotes.mdText",
-        "description": "Unotes markdown text",
+        "id": "markdown.mdText",
+        "description": "Markdown Live markdown text",
         "defaults": {
           "dark": "foreground",
           "light": "foreground",
@@ -231,8 +231,8 @@
         }
       },
       {
-        "id": "unotes.mdSelectedBackground",
-        "description": "Unotes markdown selected text background",
+        "id": "markdown.mdSelectedBackground",
+        "description": "Markdown Live markdown selected text background",
         "defaults": {
           "dark": "editor.selectionBackground",
           "light": "editor.selectionBackground",
@@ -240,8 +240,8 @@
         }
       },
       {
-        "id": "unotes.mdHeader",
-        "description": "Unotes markdown header",
+        "id": "markdown.mdHeader",
+        "description": "Markdown Live markdown header",
         "defaults": {
           "dark": "#F1DB78",
           "light": "#bb96c0",
@@ -249,8 +249,8 @@
         }
       },
       {
-        "id": "unotes.mdListSub1",
-        "description": "Unotes markdown list sub item 1",
+        "id": "markdown.mdListSub1",
+        "description": "Markdown Live markdown list sub item 1",
         "defaults": {
           "dark": "textPreformat.foreground",
           "light": "textPreformat.foreground",
@@ -258,8 +258,8 @@
         }
       },
       {
-        "id": "unotes.mdListSub2",
-        "description": "Unotes markdown list sub item 2",
+        "id": "markdown.mdListSub2",
+        "description": "Markdown Live markdown list sub item 2",
         "defaults": {
           "dark": "descriptionForeground",
           "light": "descriptionForeground",
@@ -267,8 +267,8 @@
         }
       },
       {
-        "id": "unotes.mdListSub3",
-        "description": "Unotes markdown list sub item 3",
+        "id": "markdown.mdListSub3",
+        "description": "Markdown Live markdown list sub item 3",
         "defaults": {
           "dark": "#BB96C0",
           "light": "#BB96C0",
@@ -276,8 +276,8 @@
         }
       },
       {
-        "id": "unotes.mdCodeBlockText",
-        "description": "Unotes markdown codeblock text",
+        "id": "markdown.mdCodeBlockText",
+        "description": "Markdown Live markdown codeblock text",
         "defaults": {
           "dark": "#e0a161",
           "light": "#206020",
@@ -285,8 +285,8 @@
         }
       },
       {
-        "id": "unotes.mdLink",
-        "description": "Unotes markdown link",
+        "id": "markdown.mdLink",
+        "description": "Markdown Live markdown link",
         "defaults": {
           "dark": "textLink.foreground",
           "light": "textLink.foreground",
@@ -294,8 +294,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeComment",
-        "description": "Unotes preview code comment",
+        "id": "markdown.pvCodeComment",
+        "description": "Markdown Live preview code comment",
         "defaults": {
           "dark": "#998",
           "light": "#998",
@@ -303,8 +303,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeText",
-        "description": "Unotes preview code text",
+        "id": "markdown.pvCodeText",
+        "description": "Markdown Live preview code text",
         "defaults": {
           "dark": "#333",
           "light": "#333",
@@ -312,8 +312,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeKeyword",
-        "description": "Unotes preview code keyword",
+        "id": "markdown.pvCodeKeyword",
+        "description": "Markdown Live preview code keyword",
         "defaults": {
           "dark": "#3e4d75",
           "light": "#3e4d75",
@@ -321,8 +321,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeNumber",
-        "description": "Unotes preview code number",
+        "id": "markdown.pvCodeNumber",
+        "description": "Markdown Live preview code number",
         "defaults": {
           "dark": "#3e7550",
           "light": "#3e7550",
@@ -330,8 +330,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeString",
-        "description": "Unotes preview code string",
+        "id": "markdown.pvCodeString",
+        "description": "Markdown Live preview code string",
         "defaults": {
           "dark": "#b64f69",
           "light": "#b64f69",
@@ -339,8 +339,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeType",
-        "description": "Unotes preview code type",
+        "id": "markdown.pvCodeType",
+        "description": "Markdown Live preview code type",
         "defaults": {
           "dark": "#458",
           "light": "#458",
@@ -348,8 +348,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeDeletion",
-        "description": "Unotes preview code deletion",
+        "id": "markdown.pvCodeDeletion",
+        "description": "Markdown Live preview code deletion",
         "defaults": {
           "dark": "#722113",
           "light": "#eec5be",
@@ -357,8 +357,8 @@
         }
       },
       {
-        "id": "unotes.pvCodeAddition",
-        "description": "Unotes preview code addition",
+        "id": "markdown.pvCodeAddition",
+        "description": "Markdown Live preview code addition",
         "defaults": {
           "dark": "#387221",
           "light": "#b7eba2",
@@ -366,24 +366,141 @@
         }
       },
       {
-        "id": "unotes.pvCodeTitle",
-        "description": "Unotes preview code title",
+        "id": "markdown.pvCodeTitle",
+        "description": "Markdown Live preview code title",
         "defaults": {
           "dark": "#abb61a",
           "light": "#abb61a",
           "highContrast": "#abb61a"
         }
       }
+    ],
+    "commands": [
+      {
+        "command": "markdown-live.toggleMode",
+        "title": "Toggle Editor Mode"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "markdown-live.heading.1",
+        "key": "ctrl+alt+1",
+        "mac": "cmd+alt+1"
+      },
+      {
+        "command": "markdown-live.heading.2",
+        "key": "ctrl+alt+2",
+        "mac": "cmd+alt+2"
+      },
+      {
+        "command": "markdown-live.heading.3",
+        "key": "ctrl+alt+3",
+        "mac": "cmd+alt+3"
+      },
+      {
+        "command": "markdown-live.heading.4",
+        "key": "ctrl+alt+4",
+        "mac": "cmd+alt+4"
+      },
+      {
+        "command": "markdown-live.heading.5",
+        "key": "ctrl+alt+5",
+        "mac": "cmd+alt+5"
+      },
+      {
+        "command": "markdown-live.heading.6",
+        "key": "ctrl+alt+6",
+        "mac": "cmd+alt+6"
+      },
+      {
+        "command": "markdown-live.normal",
+        "key": "ctrl+alt+0",
+        "mac": "cmd+alt+0"
+      },
+      {
+        "command": "markdown-live.bold",
+        "key": "ctrl+alt+b",
+        "mac": "cmd+alt+b"
+      },
+      {
+        "command": "markdown-live.italic",
+        "key": "ctrl+alt+i",
+        "mac": "cmd+alt+i"
+      },
+      {
+        "command": "markdown-live.strike",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      },
+      {
+        "command": "markdown-live.task",
+        "key": "ctrl+alt+t",
+        "mac": "cmd+alt+t"
+      },
+      {
+        "command": "markdown-live.ul",
+        "key": "ctrl+alt+u",
+        "mac": "cmd+alt+u"
+      },
+      {
+        "command": "markdown-live.ol",
+        "key": "ctrl+alt+o",
+        "mac": "cmd+alt+o"
+      },
+      {
+        "command": "markdown-live.blockquote",
+        "key": "ctrl+alt+q",
+        "mac": "cmd+alt+q"
+      },
+      {
+        "command": "markdown-live.code",
+        "key": "ctrl+alt+h",
+        "mac": "cmd+alt+h"
+      },
+      {
+        "command": "markdown-live.codeblock",
+        "key": "ctrl+alt+c",
+        "mac": "cmd+alt+c"
+      },
+      {
+        "command": "markdown-live.indent",
+        "key": "",
+        "mac": ""
+      },
+      {
+        "command": "markdown-live.outdent",
+        "key": "",
+        "mac": ""
+      },
+      {
+        "command": "markdown-live.hr",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l"
+      },
+      {
+        "command": "markdown-live.toggleMode",
+        "key": "ctrl+alt+m"
+      }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "yarn run compile && npm run build-editor && npm run bundle",
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "test": "node ./out/test/runTest.js",
     "build": "rimraf out && yarn compile",
+    "prebuild-editor": "npm run remove-build",
+    "build-editor": "cd ui && node build-non-split.js",
+    "postbuild-editor": "npm run move-build",
+    "move-build": "run-script-os",
+    "move-build:win32": "cd ui && move build .. && cd ..",
+    "move-build:nix": "cd ui && mv build ../build && cd ..",
+    "remove-build": "run-script-os",
+    "remove-build:win32": "IF EXIST ./build\\NUL (rmdir /s /q build)",
+    "remove-build:nix": "if [ -d \"build\" ]; then rm -r build; fi;",
+    "bundle": "webpack --mode production",
     "package-ext": "vsce package",
     "publish-ext": "vsce publish"
   },
@@ -402,7 +519,11 @@
     "husky": "^2.3.0",
     "pretty-quick": "^1.11.0",
     "prettier": "1.17.1",
-    "all-contributors-cli": "^6.6.1"
+    "all-contributors-cli": "^6.6.1",
+    "run-script-os": "^1.0.7",
+    "webpack-cli": "^3.3.9",
+    "webpack": "^4.41.2",
+    "ts-loader": "^5.4.5"
   },
   "husky": {
     "hooks": {
