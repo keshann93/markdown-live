@@ -26,7 +26,7 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
 
-Editor.defineExtension('unotes', function() {
+Editor.defineExtension('markdown', function() {
   const defaultRenderer = Editor.markdownit.renderer.rules.image;
   const httpRE = /^https?:\/\/|^data:/;
   const imgFunc = function(tokens, idx, options, env, self) {
@@ -84,7 +84,7 @@ class TuiEditor extends Component {
       },
       usageStatistics: false,
       useCommandShortcut: false,
-      exts: ['scrollSync', 'chart', 'uml', 'unotes'],
+      exts: ['scrollSync', 'chart', 'uml', 'markdown'],
       toolbarItems: [
         'heading',
         'bold',
@@ -109,7 +109,7 @@ class TuiEditor extends Component {
       ],
     });
 
-    editor.on('convertorBeforeHtmlToMarkdownConverted', this.onHtmlBefore);
+    // editor.on('convertorBeforeHtmlToMarkdownConverted', this.onHtmlBefore);
 
     editor.on('convertorAfterHtmlToMarkdownConverted', this.onAfterMarkdown);
 
@@ -131,22 +131,23 @@ class TuiEditor extends Component {
   }
 
   onHtmlBefore(e) {
+    console.log('html to markdown conversion');
     return replaceAll(e, img_root, '');
   }
 
   onAfterMarkdown(e) {
     if (this.remarkSettings) {
       // Reformat markdown
-      // console.log("from...")
-      // console.log(e);
+      console.log('from...');
+      console.log(e);
       const md = remark()
         .use({
           settings: this.remarkSettings,
         })
         .use(this.remarkPlugin)
         .processSync(e).contents;
-      // console.log("to...")
-      // console.log(md);
+      console.log('to...');
+      console.log(md);
 
       return md;
     }
@@ -154,7 +155,7 @@ class TuiEditor extends Component {
   }
 
   onPreviewBeforeHook(e) {
-    //console.log(e);
+    console.log(e);
     return e;
   }
 
