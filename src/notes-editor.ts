@@ -20,19 +20,18 @@ export default class NotesEditor {
   public disposables: any;
   public reloadContentNeeded: any;
   public updateSettingsNeeded: any;
-  public currentPath: any;
   public currentNote: any;
   public imageToConvert: any;
   public panel: any;
   public writingFile: any;
 
-  static createOrShow(extensionPath: any) {
+  static createOrShow(extensionPath: any, webviewPanel: vscode.WebviewPanel, document: vscode.TextDocument) {
     const column = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.viewColumn : undefined;
 
     if (_currentPanel) {
       _currentPanel.panel.reveal(column);
     } else {
-      _currentPanel = new NotesEditor(extensionPath, column || vscode.ViewColumn.One);
+      _currentPanel = new NotesEditor(extensionPath, column || vscode.ViewColumn.One, document, webviewPanel);
     }
   }
 
@@ -45,10 +44,10 @@ export default class NotesEditor {
     }
   }
 
-  static recreate(extensionPath: any, currentNote: any) {
+  static recreate(extensionPath: any, currentNote: any, panel: any) {
     try {
       NotesEditor.close();
-      NotesEditor.createOrShow(extensionPath);
+      NotesEditor.createOrShow(extensionPath, currentNote, panel);
       if (currentNote) {
         _currentPanel.showUNote(currentNote);
       }
@@ -61,22 +60,27 @@ export default class NotesEditor {
     return _currentPanel;
   }
 
-  constructor(extensionPath: any, column: any) {
+  constructor(extensionPath: any, column: any, document: vscode.TextDocument, webviewPanel: vscode.WebviewPanel) {
     try {
       this.extensionPath = extensionPath;
       this.disposables = [];
       this.reloadContentNeeded = false;
       this.updateSettingsNeeded = false;
-      this.currentPath = '';
-      this.currentNote = null;
+      this.currentNote = document.fileName;
       this.imageToConvert = null;
 
-      this.panel = vscode.window.createWebviewPanel('unotes', 'UNotes', column, {
+      webviewPanel.webview.options = {
         enableScripts: true,
-        retainContextWhenHidden: true,
-        enableFindWidget: true,
         localResourceRoots: [vscode.Uri.file(path.join(Config.rootPath)), vscode.Uri.file(path.join(this.extensionPath, 'build'))],
-      });
+      };
+      this.panel = webviewPanel;
+
+      // vscode.window.createWebviewPanel('markdown-live', 'Markdown Live', column, {
+      //   enableScripts: true,
+      //   retainContextWhenHidden: true,
+      //   enableFindWidget: true,
+      //   localResourceRoots: [vscode.Uri.file(path.join(Config.rootPath)), vscode.Uri.file(path.join(this.extensionPath, 'build'))],
+      // });
 
       // Set the webview's initial html content
       this.panel.webview.html = this.getWebviewContent();
@@ -105,12 +109,12 @@ export default class NotesEditor {
               }
               break;
             case 'editorOpened':
-              this.updateContents();
+              this.showUNote(this.currentNote);
               this.updateEditorSettings();
               this.updateRemarkSettings();
               break;
             case 'resized':
-              NotesEditor.recreate(this.extensionPath, this.currentNote);
+              NotesEditor.recreate(this.extensionPath, this.currentNote, this.panel);
               break;
             case 'convertImage':
               this.imageToConvert = message.data;
@@ -143,102 +147,102 @@ export default class NotesEditor {
 
       // Register commands
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.1', () => {
+        vscode.commands.registerCommand('markdown-live.heading.1', () => {
           this.hotkeyExec(['Heading', 1]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.2', () => {
+        vscode.commands.registerCommand('markdown-live.heading.2', () => {
           this.hotkeyExec(['Heading', 2]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.3', () => {
+        vscode.commands.registerCommand('markdown-live.heading.3', () => {
           this.hotkeyExec(['Heading', 3]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.4', () => {
+        vscode.commands.registerCommand('markdown-live.heading.4', () => {
           this.hotkeyExec(['Heading', 4]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.5', () => {
+        vscode.commands.registerCommand('markdown-live.heading.5', () => {
           this.hotkeyExec(['Heading', 5]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.heading.6', () => {
+        vscode.commands.registerCommand('markdown-live.heading.6', () => {
           this.hotkeyExec(['Heading', 6]);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.normal', () => {
+        vscode.commands.registerCommand('markdown-live.normal', () => {
           this.hotkeyExec(['Paragraph']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.bold', () => {
+        vscode.commands.registerCommand('markdown-live.bold', () => {
           this.hotkeyExec(['Bold']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.italic', () => {
+        vscode.commands.registerCommand('markdown-live.italic', () => {
           this.hotkeyExec(['Italic']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.strike', () => {
+        vscode.commands.registerCommand('markdown-live.strike', () => {
           this.hotkeyExec(['Strike']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.task', () => {
+        vscode.commands.registerCommand('markdown-live.task', () => {
           this.hotkeyExec(['Task']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.ul', () => {
+        vscode.commands.registerCommand('markdown-live.ul', () => {
           this.hotkeyExec(['UL']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.ol', () => {
+        vscode.commands.registerCommand('markdown-live.ol', () => {
           this.hotkeyExec(['OL']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.blockquote', () => {
+        vscode.commands.registerCommand('markdown-live.blockquote', () => {
           this.hotkeyExec(['Blockquote']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.code', () => {
+        vscode.commands.registerCommand('markdown-live.code', () => {
           this.hotkeyExec(['Code']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.codeblock', () => {
+        vscode.commands.registerCommand('markdown-live.codeblock', () => {
           this.hotkeyExec(['CodeBlock']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.indent', () => {
+        vscode.commands.registerCommand('markdown-live.indent', () => {
           this.hotkeyExec(['Indent']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.outdent', () => {
+        vscode.commands.registerCommand('markdown-live.outdent', () => {
           this.hotkeyExec(['Outdent']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.hr', () => {
+        vscode.commands.registerCommand('markdown-live.hr', () => {
           this.hotkeyExec(['HR']);
         })
       );
       this.disposables.push(
-        vscode.commands.registerCommand('unotes.toggleMode', () => {
+        vscode.commands.registerCommand('markdown-live.toggleMode', () => {
           this.toggleEditorMode();
         })
       );
@@ -291,20 +295,18 @@ export default class NotesEditor {
   }
 
   saveChanges(content: any) {
-    if (this.currentPath) {
-      this.writingFile = this.currentPath;
-      fs.writeFileSync(this.currentPath, content, 'utf8');
+    if (this.currentNote) {
+      this.writingFile = this.currentNote;
+      fs.writeFileSync(this.currentNote, content, 'utf8');
     }
   }
 
   showUNote(unote: any) {
     try {
-      const filePath = unote.fullPath();
       this.currentNote = unote;
-      this.currentPath = filePath;
       this.updateContents();
-      const title = unote.label;
-      this.panel.title = 'Unotes - ' + title;
+      const title = unote.replace(/^.*[\\\/]/, '');
+      this.panel.title = 'Markdown - ' + title;
     } catch (e) {
       console.log(e);
     }
@@ -313,9 +315,9 @@ export default class NotesEditor {
   updateContents() {
     try {
       if (this.currentNote) {
-        const content = fs.readFileSync(this.currentPath, 'utf8');
-        const folderPath = vscode.Uri.file(path.join(Config.rootPath, this.currentNote.folderPath)).path;
-        this.panel.webview.postMessage({ command: 'setContent', content, folderPath, contentPath: this.currentPath });
+        const content = fs.readFileSync(this.currentNote, 'utf8');
+        //const folderPath = vscode.Uri.file(path.join(Config.rootPath, this.currentNote.folderPath)).path;
+        this.panel.webview.postMessage({ command: 'setContent', content, folderPath: '', contentPath: this.currentNote });
       }
     } catch (e) {
       console.log(e);
@@ -342,7 +344,9 @@ export default class NotesEditor {
 
           if (match) {
             // write the file
-            const fname = Utils.saveMediaImage(noteFolder, new Buffer.alloc(match[2].length, match[2], 'base64'), index++, match[1]);
+            const size: number = match[2].length;
+            const fill: string = match[2];
+            const fname = Utils.saveMediaImage(noteFolder, new (Buffer.alloc as any)(size, fill, 'base64'), index++, match[1]);
 
             found++;
             // replace the content with the the relative path
@@ -364,7 +368,7 @@ export default class NotesEditor {
 
   updateFileIfOpen(filePath: any) {
     // update our view if an external change happens
-    if (this.currentPath == filePath && filePath != this.writingFile) {
+    if (this.currentNote == filePath && filePath != this.writingFile) {
       // if the view is active then load now else flag to reload on showing
       if (this.panel.active) {
         this.updateContents();
@@ -378,19 +382,19 @@ export default class NotesEditor {
   }
 
   switchIfOpen(oldNote: any, newNote: any) {
-    if (this.currentPath == oldNote.fullPath()) {
+    if (this.currentNote == oldNote) {
       this.showUNote(newNote);
     }
   }
 
   closeIfOpen(filePath: any) {
-    if (filePath == this.currentPath) {
+    if (filePath == this.currentNote) {
       NotesEditor.close();
     }
   }
 
   checkCurrentFile() {
-    if (!fs.existsSync(this.currentPath)) {
+    if (!fs.existsSync(this.currentNote)) {
       NotesEditor.close();
     }
   }
@@ -438,7 +442,7 @@ export default class NotesEditor {
 				<meta charset="utf-8">
 				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 				<meta name="theme-color" content="#000000">
-				<title>UNotes</title>
+				<title>Markdown Live</title>
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: http: https: data:; script-src 'unsafe-inline' 'unsafe-eval' vscode-resource: data:;style-src vscode-resource: 'unsafe-inline' http: https: data:;">
 				<base href="${baseUri}/">

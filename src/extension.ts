@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "markdown-live" is now active!');
 
   // Register our custom editor provider
-  MarkdownLiveEditorProvider.register();
+  MarkdownLiveEditorProvider.register(context);
 }
 
 // this method is called when your extension is deactivated

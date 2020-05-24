@@ -13,14 +13,6 @@ export default class NotesUtil {
 
   constructor() {}
 
-  stripExt(str: any) {
-    const pos = str.toUpperCase().lastIndexOf(Config.noteFileExtension.toUpperCase());
-    if (pos < 0) {
-      return str;
-    }
-    return str.substring(0, pos);
-  }
-
   /**
    * Returns the next image index in the media folder for the document folder
    */
