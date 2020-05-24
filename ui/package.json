@@ -1,5 +1,5 @@
 {
-  "name": "UNotesEditor",
+  "name": "Markdown Live Editor",
   "version": "0.1.0",
   "dependencies": {
     "debounce": "^1.2.0",
