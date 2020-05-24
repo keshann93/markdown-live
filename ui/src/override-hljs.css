@@ -1,0 +1,93 @@
+body.markdown-common .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: var(--vscode-markdown-pvCodeText);
+  background: #f8f8f8;
+}
+
+body.markdown-common .hljs-comment,
+body.markdown-common .hljs-quote {
+  color: var(--vscode-markdown-pvCodeComment);
+  font-style: italic;
+}
+
+body.markdown-common .hljs-keyword,
+body.markdown-common .hljs-selector-tag,
+body.markdown-common .hljs-subst {
+  color: var(--vscode-markdown-pvCodeKeyword);
+  font-weight: bold;
+}
+
+body.markdown-common .hljs-number,
+body.markdown-common .hljs-literal,
+body.markdown-common .hljs-variable,
+body.markdown-common .hljs-template-variable,
+body.markdown-common .hljs-tag .hljs-attr {
+  color: var(--vscode-markdown-pvCodeNumber);
+}
+
+body.markdown-common .hljs-string,
+body.markdown-common .hljs-doctag {
+  color: var(--vscode-markdown-pvCodeString);
+}
+
+body.markdown-common .hljs-title,
+body.markdown-common .hljs-section,
+body.markdown-common .hljs-selector-id {
+  color: var(--vscode-markdown-pvCodeTitle);
+  font-weight: bold;
+}
+
+body.markdown-common .hljs-subst {
+  font-weight: normal;
+}
+
+body.markdown-common .hljs-type,
+body.markdown-common .hljs-class .hljs-title {
+  color: var(--vscode-markdown-pvCodeType);
+  font-weight: bold;
+}
+
+body.markdown-common .hljs-tag,
+body.markdown-common .hljs-name,
+body.markdown-common .hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+body.markdown-common .hljs-regexp,
+body.markdown-common .hljs-link {
+  color: #009926;
+}
+
+body.markdown-common .hljs-symbol,
+body.markdown-common .hljs-bullet {
+  color: #990073;
+}
+
+body.markdown-common .hljs-built_in,
+body.markdown-common .hljs-builtin-name {
+  color: #0086b3;
+}
+
+body.markdown-common .hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+body.markdown-common .hljs-deletion {
+  background: var(--vscode-markdown-pvCodeDeletion);
+}
+
+body.markdown-common .hljs-addition {
+  background: var(--vscode-markdown-pvCodeAddition);
+}
+
+body.markdown-common .hljs-emphasis {
+  font-style: italic;
+}
+
+body.markdown-common .hljs-strong {
+  font-weight: bold;
+}
