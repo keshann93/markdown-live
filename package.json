@@ -3,7 +3,7 @@
   "displayName": "Markdown Live",
   "description": "Real-time markdown Editor & Viewer",
   "publisher": "keshan",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.44.0"
   },

@@ -2,6 +2,12 @@
 
 All notable changes to the "markdown-live" extension will be documented in this file.
 
+## [0.0.4]
+
+- Fixed issues themes
+- Added WYSIWYG and markdown modes
+- Added shortcut keys and tool tips for the tool bar
+
 ## [0.0.2]
 
 - Fixed issue with scroll
