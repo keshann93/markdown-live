@@ -1,6 +1,9 @@
 <h1 align="center">📝 Markdown Editor &amp; Previewer
 </h1>
 
+[![https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live](https://vsmarketplacebadge.apphb.com/version/keshan.markdown-live.svg)](https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live)
+[![](https://vsmarketplacebadge.apphb.com/installs-short/keshan.markdown-live.svg)](https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live)
+
 ##### Markdown-live introduces a Markdown editor & previewer into Visual Studio Code.
 
 ![intro](https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-intro.PNG)
@@ -41,7 +44,8 @@
 
 6. Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
 
-7) Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
+7. lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-0.0.3.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-0.0.3.vsix)
+8. Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
 
 ## Keybindings
 
