@@ -7,11 +7,6 @@ Object.defineProperty(exports, '__esModule', {
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
-import NotesConfig from './notes-config';
-import NotesUtil from './notes-util';
-
-const Config = new NotesConfig();
-const Utils = new NotesUtil();
 
 let _currentPanel: any = null;
 
@@ -21,9 +16,9 @@ export default class NotesEditor {
   public reloadContentNeeded: any;
   public updateSettingsNeeded: any;
   public currentNote: any;
-  public imageToConvert: any;
   public panel: any;
   public writingFile: any;
+  public rootPath: any;
 
   static createOrShow(extensionPath: any, webviewPanel: vscode.WebviewPanel, document: vscode.TextDocument) {
     const column = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.viewColumn : undefined;
@@ -44,18 +39,6 @@ export default class NotesEditor {
     }
   }
 
-  static recreate(extensionPath: any, currentNote: any, panel: any) {
-    try {
-      NotesEditor.close();
-      NotesEditor.createOrShow(extensionPath, currentNote, panel);
-      if (currentNote) {
-        _currentPanel.showUNote(currentNote);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   static instance() {
     return _currentPanel;
   }
@@ -67,20 +50,18 @@ export default class NotesEditor {
       this.reloadContentNeeded = false;
       this.updateSettingsNeeded = false;
       this.currentNote = document.fileName;
-      this.imageToConvert = null;
+
+      if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length == 0) {
+        this.rootPath = '';
+      } else {
+        this.rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+      }
 
       webviewPanel.webview.options = {
         enableScripts: true,
-        localResourceRoots: [vscode.Uri.file(path.join(Config.rootPath)), vscode.Uri.file(path.join(this.extensionPath, 'build'))],
+        localResourceRoots: [vscode.Uri.file(path.join(this.rootPath)), vscode.Uri.file(path.join(this.extensionPath, 'build'))],
       };
       this.panel = webviewPanel;
-
-      // vscode.window.createWebviewPanel('markdown-live', 'Markdown Live', column, {
-      //   enableScripts: true,
-      //   retainContextWhenHidden: true,
-      //   enableFindWidget: true,
-      //   localResourceRoots: [vscode.Uri.file(path.join(Config.rootPath)), vscode.Uri.file(path.join(this.extensionPath, 'build'))],
-      // });
 
       // Set the webview's initial html content
       this.panel.webview.html = this.getWebviewContent();
@@ -94,30 +75,10 @@ export default class NotesEditor {
         (message: any) => {
           switch (message.command) {
             case 'applyChanges':
-              // kind of a hack to replace pasted images with actual files
-              if (this.imageToConvert) {
-                const newContent = this.convertImage(message.content, this.imageToConvert);
-                if (newContent) {
-                  // will be empty on error
-                  message.content = newContent;
-                }
-              }
               this.saveChanges(message.content);
-              if (this.imageToConvert) {
-                this.imageToConvert = null;
-                this.updateContents();
-              }
               break;
             case 'editorOpened':
               this.showUNote(this.currentNote);
-              this.updateEditorSettings();
-              this.updateRemarkSettings();
-              break;
-            case 'resized':
-              NotesEditor.recreate(this.extensionPath, this.currentNote, this.panel);
-              break;
-            case 'convertImage':
-              this.imageToConvert = message.data;
               break;
             default:
               console.log('Unknown webview message received:');
@@ -136,7 +97,6 @@ export default class NotesEditor {
               this.reloadContentNeeded = false;
             }
             if (this.updateSettingsNeeded) {
-              this.updateEditorSettings();
               this.updateSettingsNeeded = false;
             }
           }
@@ -246,40 +206,9 @@ export default class NotesEditor {
           this.toggleEditorMode();
         })
       );
-
-      Utils.context.subscriptions.push(Config.onDidChange_editor_settings(this.updateEditorSettings.bind(this)));
-      this.updateEditorSettings();
-      this.updateRemarkSettings();
     } catch (e) {
       console.log(e);
     }
-  }
-
-  updateEditorSettings() {
-    if (this.panel.active) {
-      this.panel.webview.postMessage({ command: 'settings', settings: Config.settings.get('editor') });
-    } else {
-      this.updateSettingsNeeded = true;
-    }
-  }
-
-  updateRemarkSettings() {
-    const remarkSettingsFile = 'remark_settings.json';
-    const remarkSettingsCommand = 'remarkSettings';
-    const fp = path.join(Config.folderPath, remarkSettingsFile);
-    if (fs.existsSync(fp)) {
-      try {
-        const data = fs.readFileSync(fp, { encoding: 'utf8' });
-        const obj = JSON.parse(data);
-        this.panel.webview.postMessage({ command: remarkSettingsCommand, settings: obj });
-        return;
-      } catch (e) {
-        const msg = e.message;
-        console.log(msg);
-        vscode.window.showWarningMessage('Failed to load remark_settings.json file. \nNo Unotes remark formatting will be done.');
-      }
-    }
-    this.panel.webview.postMessage({ command: remarkSettingsCommand, settings: null });
   }
 
   hotkeyExec(args: any) {
@@ -316,86 +245,10 @@ export default class NotesEditor {
     try {
       if (this.currentNote) {
         const content = fs.readFileSync(this.currentNote, 'utf8');
-        //const folderPath = vscode.Uri.file(path.join(Config.rootPath, this.currentNote.folderPath)).path;
         this.panel.webview.postMessage({ command: 'setContent', content, folderPath: '', contentPath: this.currentNote });
       }
     } catch (e) {
       console.log(e);
-    }
-  }
-
-  /**
-   * Removes the given image data from the content,
-   * saves an image, puts a relative image path in its place
-   * @returns the new content, or blank if a failure happends
-   */
-  convertImage(content: any, image: any) {
-    try {
-      if (this.currentNote) {
-        const noteFolder = path.join(Config.rootPath, this.currentNote.folderPath);
-        let found = 0;
-
-        // get a unique image index
-        let index = Utils.getNextImageIndex(noteFolder);
-
-        // replace the embedded image with a relative file
-        let newContent = content.replace(image, (d: any) => {
-          let match = /data:image\/(.*);base64,(.*)$/g.exec(d);
-
-          if (match) {
-            // write the file
-            const size: number = match[2].length;
-            const fill: string = match[2];
-            const fname = Utils.saveMediaImage(noteFolder, new (Buffer.alloc as any)(size, fill, 'base64'), index++, match[1]);
-
-            found++;
-            // replace the content with the the relative path
-            return Utils.getImageTagUrl(fname);
-          }
-          return ''; // failed
-        });
-
-        if (found > 0) {
-          return newContent;
-        }
-        return content;
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    return content;
-  }
-
-  updateFileIfOpen(filePath: any) {
-    // update our view if an external change happens
-    if (this.currentNote == filePath && filePath != this.writingFile) {
-      // if the view is active then load now else flag to reload on showing
-      if (this.panel.active) {
-        this.updateContents();
-      } else {
-        this.reloadContentNeeded = true;
-      }
-      return true;
-    }
-    this.writingFile = '';
-    return false;
-  }
-
-  switchIfOpen(oldNote: any, newNote: any) {
-    if (this.currentNote == oldNote) {
-      this.showUNote(newNote);
-    }
-  }
-
-  closeIfOpen(filePath: any) {
-    if (filePath == this.currentNote) {
-      NotesEditor.close();
-    }
-  }
-
-  checkCurrentFile() {
-    if (!fs.existsSync(this.currentNote)) {
-      NotesEditor.close();
     }
   }
 
