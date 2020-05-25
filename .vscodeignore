@@ -17,3 +17,6 @@ ui/**
 tsconfig.json
 webpack.config.js
 *.vsix
+assets/**
+icons/**
+.github/**
