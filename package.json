@@ -22,7 +22,7 @@
     "color": "#111111",
     "theme": "dark"
   },
-  "preview": true,
+  "preview": false,
   "main": "./out/extension.js",
   "contributes": {
     "customEditors": [
