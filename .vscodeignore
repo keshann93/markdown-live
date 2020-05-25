@@ -9,3 +9,11 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/webpack.config.js
+**/public
+**/editor
+.vscode
+node_modules
+ui/**
+tsconfig.json
+webpack.config.js
+*.vsix
