@@ -36,37 +36,6 @@
         ]
       }
     ],
-    "configuration": {
-      "type": "object",
-      "title": "Markdown Live",
-      "properties": {
-        "markdown-live.editor.display2X": {
-          "type": "boolean",
-          "default": false,
-          "markdownDescription": "Display toolbar buttons at 2X size"
-        },
-        "markdown-live.editor.convertPastedImages": {
-          "type": "boolean",
-          "default": false,
-          "markdownDescription": "Convert pasted images to local files"
-        },
-        "markdown-live.rootPath": {
-          "type": "string",
-          "default": null,
-          "markdownDescription": "Root path of notes"
-        },
-        "markdown-live.noteFileExtension": {
-          "type": "string",
-          "default": ".md",
-          "markdownDescription": "The file extension used to filter and save note files. Default: .md"
-        },
-        "markdown-live.mediaFolder": {
-          "type": "string",
-          "default": ".media",
-          "markdownDescription": "The folder where images are saved relative to the note"
-        }
-      }
-    },
     "colors": [
       {
         "id": "markdown.wysText",
