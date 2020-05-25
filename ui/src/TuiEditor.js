@@ -11,60 +11,16 @@ import './override-contents.css';
 import './override-codemirror.css';
 import './override-codemirror-light.css';
 import './override-hljs.css';
-import remark from 'remark';
-import markdownRemarkPlugin from './markdownRemarkPlugin';
 import { debounce } from 'debounce';
-
-// root for local images
-var img_root = '';
-
-function escapeRegExp(str) {
-  return str.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1');
-}
-
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-}
-
-Editor.defineExtension('markdown', function() {
-  const defaultRenderer = Editor.markdownit.renderer.rules.image;
-  const httpRE = /^https?:\/\/|^data:/;
-  const imgFunc = function(tokens, idx, options, env, self) {
-    const token = tokens[idx];
-    const srcIndex = token.attrIndex('src');
-    const altIndex = token.attrIndex('alt');
-    const ttlIndex = token.attrIndex('title');
-    if (srcIndex < 0 || httpRE.test(token.attrs[srcIndex][1])) {
-      return defaultRenderer(tokens, idx, options, env, self);
-    }
-    const src = ' src="' + img_root + token.attrs[srcIndex][1] + '"';
-    // check for empty alt but a content string
-    let altstr = altIndex >= 0 ? token.attrs[altIndex][1] : '';
-    if (!altstr && token.content) altstr = token.content; // replace with content
-    const alt = ' alt="' + altstr + '"';
-    const ttl = ' title="' + (ttlIndex >= 0 ? token.attrs[ttlIndex][1] : '') + '"';
-    const img = `<img${src}${alt}${ttl} />`;
-    return img;
-  };
-
-  Editor.markdownit.renderer.rules.image = imgFunc;
-  Editor.markdownitHighlight.renderer.rules.image = imgFunc;
-});
 
 class TuiEditor extends Component {
   constructor(props) {
     super(props);
     this.el = React.createRef();
-    this.handleResizeMessage = debounce(this.handleResizeMessage.bind(this), 1000);
-    this.onHtmlBefore = this.onHtmlBefore.bind(this);
-    this.onAfterMarkdown = this.onAfterMarkdown.bind(this);
     this.onPreviewBeforeHook = this.onPreviewBeforeHook.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
-    this.remarkSettings = null;
     this.contentSet = false;
     this.contentPath = null;
-    this.wysiwygScroll = {};
-    this.markdownScroll = {};
 
     this.state = {
       settings: {
@@ -84,7 +40,7 @@ class TuiEditor extends Component {
       },
       usageStatistics: false,
       useCommandShortcut: false,
-      exts: ['scrollSync', 'chart', 'uml', 'markdown'],
+      exts: ['scrollSync', 'chart', 'uml'],
       toolbarItems: [
         'heading',
         'bold',
@@ -109,19 +65,9 @@ class TuiEditor extends Component {
       ],
     });
 
-    // editor.on('convertorBeforeHtmlToMarkdownConverted', this.onHtmlBefore);
-
-    editor.on('convertorAfterHtmlToMarkdownConverted', this.onAfterMarkdown);
-
     editor.on('previewBeforeHook', this.onPreviewBeforeHook);
 
-    editor.on('addImageBlobHook', this.onPaste.bind(this));
-
-    editor.addHook('scroll', this.onScroll.bind(this));
-
     window.addEventListener('message', this.handleMessage);
-
-    window.addEventListener('resize', this.handleResizeMessage);
 
     this.setState({ editor });
 
@@ -130,66 +76,9 @@ class TuiEditor extends Component {
     });
   }
 
-  onHtmlBefore(e) {
-    console.log('html to markdown conversion');
-    return replaceAll(e, img_root, '');
-  }
-
-  onAfterMarkdown(e) {
-    if (this.remarkSettings) {
-      // Reformat markdown
-      console.log('from...');
-      console.log(e);
-      const md = remark()
-        .use({
-          settings: this.remarkSettings,
-        })
-        .use(this.remarkPlugin)
-        .processSync(e).contents;
-      console.log('to...');
-      console.log(md);
-
-      return md;
-    }
-    return e;
-  }
-
   onPreviewBeforeHook(e) {
     console.log(e);
     return e;
-  }
-
-  onScroll(e) {
-    if (!this.contentPath) return;
-
-    // save the scroll positions
-    if (this.state.editor.isWysiwygMode() && e.data) {
-      this.wysiwygScroll[this.contentPath] = this.state.editor.getCurrentModeEditor().scrollTop();
-    } else {
-      this.markdownScroll[this.contentPath] = this.state.editor.getCurrentModeEditor().scrollTop();
-    }
-  }
-
-  onPaste(e) {
-    const toBase64 = file =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-
-    if (!this.state.settings.convertPastedImages) {
-      return;
-    }
-
-    return toBase64(e).then(result => {
-      window.vscode.postMessage({
-        command: 'convertImage',
-        data: result,
-      });
-      return null;
-    });
   }
 
   componentWillUnmount() {
@@ -197,27 +86,11 @@ class TuiEditor extends Component {
     window.removeEventListener('resize', this.handleResizeMessage);
   }
 
-  handleResizeMessage(e) {
-    window.vscode.postMessage({
-      command: 'resized',
-    });
-  }
-
   setContent(data) {
-    img_root = data.folderPath + '/';
     this.state.editor.setMarkdown(data.content, false);
     this.contentSet = true;
-
-    const isSamePath = this.contentPath === data.contentPath;
     this.contentPath = data.contentPath;
-    if (!isSamePath) {
-      const scrolls = this.state.editor.isWysiwygMode() ? this.wysiwygScroll : this.markdownScroll;
-      let sTop = scrolls[this.contentPath];
-      if (!sTop) {
-        sTop = 0;
-      }
-      this.state.editor.scrollTop(sTop);
-    }
+    this.state.editor.scrollTop(0);
   }
 
   handleMessage(e) {
@@ -230,10 +103,6 @@ class TuiEditor extends Component {
         break;
       case 'settings':
         this.setState({ settings: e.data.settings });
-        break;
-      case 'remarkSettings':
-        this.remarkSettings = e.data.settings;
-        this.remarkPlugin = markdownRemarkPlugin(this.remarkSettings);
         break;
       case 'toggleMode':
         if (!this.state.editor.isWysiwygMode()) {
