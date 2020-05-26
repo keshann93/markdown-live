@@ -72,7 +72,7 @@
 
 ## Changelog
 
-Please check the [Releases](https://github.com/shd101wyy/vscode-markdown-preview-enhanced/releases) page of this project.
+Please check the [Releases](./CHANGELOG.md) page of this project.
 
 ## Contributing
 
