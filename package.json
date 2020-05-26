@@ -8,7 +8,16 @@
     "vscode": "^1.44.0"
   },
   "categories": [
-    "Other"
+    "Formatters",
+    "Other",
+    "Extension Packs"
+  ],
+  "keywords": [
+    "markdown-editor",
+    "markdown-previewer",
+    "markdown",
+    "editor",
+    "wysiwyg"
   ],
   "activationEvents": [
     "onCustomEditor:markdown-live.showMarkdown"
