@@ -501,7 +501,7 @@
     "run-script-os": "^1.0.7",
     "webpack-cli": "^3.3.9",
     "webpack": "^4.41.2",
-    "ts-loader": "^5.4.5"
+    "ts-loader": "^7.0.5"
   },
   "husky": {
     "hooks": {
