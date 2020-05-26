@@ -2,7 +2,7 @@
 
 All notable changes to the "markdown-live" extension will be documented in this file.
 
-## [0.0.4]
+## [1.0.0]
 
 - Fixed issues themes
 - Added WYSIWYG and markdown modes
