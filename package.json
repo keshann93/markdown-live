@@ -20,7 +20,7 @@
     "wysiwyg"
   ],
   "activationEvents": [
-    "onCustomEditor:markdown-live.showMarkdown"
+    "*"
   ],
   "repository": {
     "type": "git",
@@ -34,17 +34,30 @@
   "preview": false,
   "main": "./out/extension.js",
   "contributes": {
-    "customEditors": [
+    "commands": [
       {
-        "viewType": "markdown-live.showMarkdown",
-        "displayName": "Markdown Live Panel",
-        "selector": [
-          {
-            "filenamePattern": "*.md"
-          }
-        ]
+        "command": "markdown-live.showMarkdown",
+        "title": "Toggle Markdown panel",
+        "icon": {
+          "dark": "./icons/icon-light.png",
+          "light": "./icons/icon-dark.png"
+        }
+      },
+      {
+        "command": "markdown-live.toggleMode",
+        "title": "Toggle Editor Mode"
       }
     ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-live.showMarkdown",
+          "alt": "markdown-live.showMarkdown",
+          "group": "navigation"
+        }
+      ]
+    },
     "colors": [
       {
         "id": "markdown.wysText",
@@ -351,12 +364,6 @@
           "light": "#abb61a",
           "highContrast": "#abb61a"
         }
-      }
-    ],
-    "commands": [
-      {
-        "command": "markdown-live.toggleMode",
-        "title": "Toggle Editor Mode"
       }
     ],
     "keybindings": [
