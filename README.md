@@ -21,13 +21,13 @@ Markdown-live supports the followings
 - 🌈 Supports rendering of multiple `.md` files
 - 🌏 Instantly syncs the changes made in either of two panels (markdown editor and text-document) across seamlessly
 - 🌟 Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
-- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-0.0.3.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-0.0.4.vsix)
+- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)
 - ⚡️ Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
 
 ## Getting started
 
 - Install the [Markdown-live](https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live) extension in VS Code
-- After opening a `markdown/.md` file, click on the <img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/icons/tiny-icon.png" width="20px" /> icon to toggle the side-bar
+- After opening a `markdown/.md` file, click on the <img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/icons/tiny-icon.png" width="20px"> icon to toggle the side-bar
 - Place your cursor in the markdown content
 - You should see the sidebar tries to render the markdown content
 
@@ -82,8 +82,8 @@ Have a look at our [contribution guide](./contributing.md).
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-<table><tbody><tr><td align="center"><a href="http://keshShan.github.io"><img src="https://avatars3.githubusercontent.com/u/12506034?v=4" width="100px;" alt=""><br>
-<sub><b>Keshan Nageswaran</b></sub></a><a href="https://github.com/KeshShan/semantic-live/commits?author=keshshan" title="Code">💻</a> <a href="#design-keshshan" title="Design">🎨</a></td></tr></tbody></table>
+<table><tbody><tr><td align="center"><a href="http://keshann93.github.io"><img src="https://avatars3.githubusercontent.com/u/12506034?v=4" width="100px;" alt=""><br>
+<sub><b>Keshan Nageswaran</b></sub></a><a href="https://github.com/keshann93/semantic-live/commits?author=keshann93" title="Code">💻</a> <a href="#design-keshann93" title="Design">🎨</a></td></tr></tbody></table>
 
 ## License
 
