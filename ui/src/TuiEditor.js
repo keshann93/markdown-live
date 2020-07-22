@@ -12,58 +12,16 @@ import './override-codemirror.css';
 import './override-codemirror-light.css';
 import './override-hljs.css';
 import { debounce } from 'debounce';
-import remark from 'remark';
-import markdownRemarkPlugin from './markdownRemarkPlugin';
 
-// root for local images
-var img_root = '';
-
-function escapeRegExp(str) {
-  return str.replace(/([.*+?^=!:${}()|[]\/\\])/g, '\\$1');
-}
-
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-}
-
-Editor.defineExtension('markdown', function() {
-  const defaultRenderer = Editor.markdownit.renderer.rules.image;
-  const httpRE = /^https?:\/\/|^data:/;
-  const imgFunc = function(tokens, idx, options, env, self) {
-    const token = tokens[idx];
-    const srcIndex = token.attrIndex('src');
-    const altIndex = token.attrIndex('alt');
-    const ttlIndex = token.attrIndex('title');
-    if (srcIndex < 0 || httpRE.test(token.attrs[srcIndex][1])) {
-      return defaultRenderer(tokens, idx, options, env, self);
-    }
-    const src = ' src="' + img_root + token.attrs[srcIndex][1] + '"';
-    // check for empty alt but a content string
-    let altstr = altIndex >= 0 ? token.attrs[altIndex][1] : '';
-    if (!altstr && token.content) altstr = token.content; // replace with content
-    const alt = ' alt="' + altstr + '"';
-    const ttl = ' title="' + (ttlIndex >= 0 ? token.attrs[ttlIndex][1] : '') + '"';
-    const img = `<img${src}${alt}${ttl} />`;
-    return img;
-  };
-
-  Editor.markdownit.renderer.rules.image = imgFunc;
-  Editor.markdownitHighlight.renderer.rules.image = imgFunc;
-});
 class TuiEditor extends Component {
   constructor(props) {
     super(props);
     this.el = React.createRef();
-    this.handleResizeMessage = debounce(this.handleResizeMessage.bind(this), 1000);
-    this.onHtmlBefore = this.onHtmlBefore.bind(this);
-    this.onAfterMarkdown = this.onAfterMarkdown.bind(this);
     this.onPreviewBeforeHook = this.onPreviewBeforeHook.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
-    this.remarkSettings = null;
     this.contentSet = false;
     this.contentPath = null;
     this.wysiwygScroll = {};
-    this.markdownScroll = {};
 
     this.state = {
       settings: {
@@ -109,46 +67,13 @@ class TuiEditor extends Component {
       ],
     });
 
-    editor.on('convertorBeforeHtmlToMarkdownConverted', this.onHtmlBefore);
-
     editor.on('previewBeforeHook', this.onPreviewBeforeHook);
-
-    editor.on('addImageBlobHook', this.onPaste.bind(this));
 
     editor.addHook('scroll', this.onScroll.bind(this));
 
     window.addEventListener('message', this.handleMessage);
 
-    window.addEventListener('resize', this.handleResizeMessage);
-
     this.setState({ editor });
-
-    window.vscode.postMessage({
-      command: 'editorOpened',
-    });
-  }
-
-  onHtmlBefore(e) {
-    return replaceAll(e, img_root, '');
-  }
-
-  onAfterMarkdown(e) {
-    if (this.remarkSettings) {
-      // Reformat markdown
-      // console.log("from...")
-      // console.log(e);
-      const md = remark()
-        .use({
-          settings: this.remarkSettings,
-        })
-        .use(this.remarkPlugin)
-        .processSync(e).contents;
-      // console.log("to...")
-      // console.log(md);
-
-      return md;
-    }
-    return e;
   }
 
   onPreviewBeforeHook(e) {
@@ -162,67 +87,26 @@ class TuiEditor extends Component {
     // save the scroll positions
     if (this.state.editor.isWysiwygMode() && e.data) {
       this.wysiwygScroll[this.contentPath] = this.state.editor.getCurrentModeEditor().scrollTop();
-    } else {
-      this.markdownScroll[this.contentPath] = this.state.editor.getCurrentModeEditor().scrollTop();
     }
-  }
-
-  onAfterMarkdown(e) {
-    if (this.remarkSettings) {
-      // Reformat markdown
-      // console.log("from...")
-      // console.log(e);
-      const md = remark()
-        .use({
-          settings: this.remarkSettings,
-        })
-        .use(this.remarkPlugin)
-        .processSync(e).contents;
-      // console.log("to...")
-      // console.log(md);
-
-      return md;
-    }
-    return e;
-  }
-
-  onPaste(e) {
-    const toBase64 = file =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-
-    if (!this.state.settings.convertPastedImages) {
-      return;
-    }
-
-    return toBase64(e).then(result => {
-      window.vscode.postMessage({
-        command: 'convertImage',
-        data: result,
-      });
-      return null;
-    });
-  }
-  handleResizeMessage(e) {
-    window.vscode.postMessage({
-      command: 'resized',
-    });
   }
 
   componentWillUnmount() {
     window.removeEventListener('message', this.handleMessage.bind(this));
-    window.removeEventListener('resize', this.handleResizeMessage);
   }
 
   setContent(data) {
     this.state.editor.setMarkdown(data.content, false);
     this.contentSet = true;
+    const isSamePath = this.contentPath === data.contentPath;
     this.contentPath = data.contentPath;
-    // this.state.editor.scrollTop(0);
+    if (!isSamePath) {
+      const scrolls = this.state.editor.isWysiwygMode() ? this.wysiwygScroll : '';
+      let sTop = scrolls[this.contentPath];
+      if (!sTop) {
+        sTop = 0;
+      }
+      this.state.editor.sc(sTop);
+    }
   }
 
   handleMessage(e) {
@@ -235,23 +119,6 @@ class TuiEditor extends Component {
         break;
       case 'settings':
         this.setState({ settings: e.data.settings });
-        break;
-      case 'remarkSettings':
-        this.remarkSettings = e.data.settings;
-        this.remarkPlugin = markdownRemarkPlugin(this.remarkSettings);
-        break;
-      case 'toggleMode':
-        if (!this.state.editor.isWysiwygMode()) {
-          this.state.editor
-            .getUI()
-            .getModeSwitch()
-            ._changeWysiwyg();
-        } else {
-          this.state.editor
-            .getUI()
-            .getModeSwitch()
-            ._changeMarkdown();
-        }
         break;
       default:
     }

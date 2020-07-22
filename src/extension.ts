@@ -50,10 +50,6 @@ export function activate(context: vscode.ExtensionContext) {
           case 'applyChanges':
             manager.updateActiveBlock(message.content);
             break;
-          case 'editorOpened':
-            // manager.updateActiveBlock(this.currentNote);
-            console.log('opened');
-            break;
           default:
             console.log('Unknown webview message received:');
             console.log(message);
