@@ -3,45 +3,45 @@
 
 ##### Markdown-live introduces a Markdown editor & previewer into Visual Studio Code.
 
-![intro](https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-intro.PNG)
+![intro](https://raw.githubusercontent.com/KeshShan/markdown-live/master/banner.PNG)
 
 ## Introduction
 
 - Markdown Live is an extension that provides you with many useful functionalities including a live editor with useful options
 - A lot of its ideas are inspired by [Markdown Preview Style](https://github.com/mjbvz/vscode-github-markdown-preview-style) and [Unotes](https://github.com/ryanmcalister/unotes).
-- Feel free to ask questions, post issues, submit pull request, and request new features.
+- Feel free to ask questions, [post issues](https://github.com/keshann93/markdown-live/issues), submit pull request, and request new features.
 - For more information about this project and how to use this extension, please check out our Functionalities section⬇︎
 
-## Functionalities
+## Features
 
-1. Install the [markdown-live](https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live) extension in VS Code
-2. After opening a `.md` you should see it will open-up with WYSIWYG format where you can edit the files directly
+Markdown-live supports the followings
 
-###### WYSIWYG Editor Demo
+- 💅 Renders instantly any `markdown/.md` document with its content.
+- 🎨 markdown-live editor comes with supportive tools/extension accompanied to edit markdown content in an efficient manner
+- 🌈 Supports rendering of multiple `.md` files
+- 🌏 Instantly syncs the changes made in either of two panels (markdown editor and text-document) across seamlessly
+- 🌟 Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
+- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-0.0.3.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-0.0.4.vsix)
+- ⚡️ Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo1.gif">
+## Getting started
 
-3. You can switch between the Markdown/WYSIWYG views easily from the right bottom top selection option
+- Install the [Markdown-live](https://marketplace.visualstudio.com/items?itemName=keshan.markdown-live) extension in VS Code
+- After opening a `markdown/.md` file, click on the <img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/icons/tiny-icon.png" width="20px" /> icon to toggle the side-bar
+- Place your cursor in the markdown content
+- You should see the sidebar tries to render the markdown content
 
-###### Switch modes Demo
+###### Functionality Demo
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo2.gif">
-
-4. In markdown mode you can view the preview and markdown text side by side and preview view will instantly generates the changes that you make into the markdown view. It supports auto sync scroll.
-
-###### Markdown mode Demo
-
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo3.gif">
-
-5. Markdown live editor also supports themes
+<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo.gif">
 
 ###### Themes Demo
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo4.gif">
+<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo1.gif">
 
-6. Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
-7. lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-0.0.3.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-0.0.4.vsix)
-8. Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
+###### Multi Document Render Demo
+
+<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo2.gif">
 
 ## Keybindings
 
