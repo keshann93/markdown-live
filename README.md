@@ -3,7 +3,7 @@
 
 ##### Markdown-live introduces a Markdown editor & previewer into Visual Studio Code.
 
-![intro](https://raw.githubusercontent.com/KeshShan/markdown-live/master/banner.PNG)
+![intro](https://raw.githubusercontent.com/keshann93/markdown-live/master/banner.PNG)
 
 ## Introduction
 
@@ -33,15 +33,15 @@ Markdown-live supports the followings
 
 ###### Functionality Demo
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo.gif">
+<img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/assets/markdown-live-demo.gif">
 
 ###### Themes Demo
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo1.gif">
+<img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/assets/markdown-live-demo1.gif">
 
 ###### Multi Document Render Demo
 
-<img src="https://raw.githubusercontent.com/KeshShan/markdown-live/master/assets/markdown-live-demo2.gif">
+<img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/assets/markdown-live-demo2.gif">
 
 ## Keybindings
 
