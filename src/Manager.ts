@@ -39,7 +39,7 @@ export default class Manager {
   }
 
   parseFromActiveEditor(): void {
-    if (this.activeEditor) {
+    if (this.activeEditor && !this.panel.active) {
       const activeFileContent = this.activeEditor.document.getText();
       this.panel.webview.postMessage({
         command: 'setContent',
@@ -51,7 +51,7 @@ export default class Manager {
   }
 
   async updateActiveBlock(value: string) {
-    if (this.activeEditor) {
+    if (this.activeEditor && this.activeEditor.document.getText() !== value) {
       const firstLine = this.activeEditor.document.lineAt(0);
       const lastLine = this.activeEditor.document.lineAt(this.activeEditor.document.lineCount - 1);
       const textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
