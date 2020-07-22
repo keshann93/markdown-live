@@ -3,7 +3,7 @@
 
 ##### Markdown-live introduces a Markdown editor & previewer into Visual Studio Code.
 
-![intro](https://raw.githubusercontent.com/keshann93/markdown-live/master/banner.PNG)
+![intro](https://raw.githubusercontent.com/keshann93/markdown-live/master/banner.png)
 
 ## Introduction
 
