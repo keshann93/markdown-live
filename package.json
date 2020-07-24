@@ -504,7 +504,7 @@
     "husky": "^2.3.0",
     "pretty-quick": "^1.11.0",
     "prettier": "1.17.1",
-    "all-contributors-cli": "^6.6.1",
+    "all-contributors-cli": "^6.17.0",
     "run-script-os": "^1.0.7",
     "webpack-cli": "^3.3.9",
     "webpack": "^4.41.2",
