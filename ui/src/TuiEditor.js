@@ -125,9 +125,10 @@ class TuiEditor extends Component {
   }
 
   onChange = event => {
-    if (!this.contentSet) {
+    if (this.contentSet) {
       // prevent saving empty file
       console.log('Prevented saving empty file.');
+      this.contentSet = false;
       return;
     }
     window.vscode.postMessage({
