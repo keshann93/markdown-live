@@ -21,7 +21,7 @@ Markdown-live supports the followings
 - 🌈 Supports rendering of multiple `.md` files
 - 🌏 Instantly syncs the changes made in either of two panels (markdown editor and text-document) across seamlessly
 - 🌟 Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
-- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)
+- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-1.2.0.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)
 - ⚡️ Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
 
 ## Getting started
