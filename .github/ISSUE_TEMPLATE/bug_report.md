@@ -10,7 +10,7 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Please provide a minimal code snippet (html) where semantic-live is failing
+Please provide a minimal code snippet (markdown) where markdown-live is failing
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
