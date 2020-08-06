@@ -5,6 +5,10 @@
 
 ![intro](https://raw.githubusercontent.com/keshann93/markdown-live/master/banner.png)
 
+![Visual Studio Marketplace Version](https://vsmarketplacebadge.apphb.com/version/keshan.markdown-live.svg)
+![Visual Studio Marketplace Installs](https://vsmarketplacebadge.apphb.com/installs/keshan.markdown-live.svg)
+![Visual Studio Marketplace Downloads](https://vsmarketplacebadge.apphb.com/downloads/keshan.markdown-live.svg)
+
 ## Introduction
 
 - Markdown Live is an extension that provides you with many useful functionalities including a live editor with useful options
