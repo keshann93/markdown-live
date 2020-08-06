@@ -45,26 +45,27 @@ Markdown-live supports the followings
 
 ## Keybindings
 
-| Shortcuts                 | Functionality           |
-| ------------------------- | ----------------------- |
-| <kbd>ctrl + alt + 1</kbd> | Heading 1               |
-| <kbd>ctrl + alt + 2</kbd> | Heading 2               |
-| <kbd>ctrl + alt + 3</kbd> | Heading 3               |
-| <kbd>ctrl + alt + 4</kbd> | Heading 4               |
-| <kbd>ctrl + alt + 5</kbd> | Heading 5               |
-| <kbd>ctrl + alt + 6</kbd> | Heading 6               |
-| <kbd>ctrl + alt + 0</kbd> | Normal                  |
-| <kbd>ctrl + alt + b</kbd> | Bold                    |
-| <kbd>ctrl + alt + i</kbd> | Italic                  |
-| <kbd>ctrl + alt + s</kbd> | Strike                  |
-| <kbd>ctrl + alt + t</kbd> | Task                    |
-| <kbd>ctrl + alt + u</kbd> | Unordered List          |
-| <kbd>ctrl + alt + o</kbd> | Ordered List            |
-| <kbd>ctrl + alt + q</kbd> | BlockQuote              |
-| <kbd>ctrl + alt + h</kbd> | Inline Code (highlight) |
-| <kbd>ctrl + alt + c</kbd> | Code Block              |
-| <kbd>ctrl + alt + l</kbd> | Horizontal Line         |
-| <kbd>ctrl + alt + m</kbd> | Toggle Mode             |
+| Shortcuts                                              | Functionality           |
+| ------------------------------------------------------ | ----------------------- |
+| <kbd>ctrl + alt + 1</kbd>/<br><kbd>cmd + alt + 1</kbd> | Heading 1               |
+| <kbd>ctrl + alt + 2</kbd>/<br><kbd>cmd + alt + 2</kbd> | Heading 2               |
+| <kbd>ctrl + alt + 3</kbd>/<br><kbd>cmd + alt + 3</kbd> | Heading 3               |
+| <kbd>ctrl + alt + 4</kbd>/<br><kbd>cmd + alt + 4</kbd> | Heading 4               |
+| <kbd>ctrl + alt + 5</kbd>/<br><kbd>cmd + alt + 5</kbd> | Heading 5               |
+| <kbd>ctrl + alt + 6</kbd>/<br><kbd>cmd + alt + 6</kbd> | Heading 6               |
+| <kbd>ctrl + alt + 0</kbd>/<br><kbd>cmd + alt + 0</kbd> | Normal                  |
+| <kbd>ctrl + alt + b</kbd>/<br><kbd>cmd + alt + b</kbd> | Bold                    |
+| <kbd>ctrl + alt + i</kbd>/<br><kbd>cmd + alt + i</kbd> | Italic                  |
+| <kbd>ctrl + alt + r</kbd>/<br><kbd>cmd + alt + r</kbd> | Strike                  |
+| <kbd>ctrl + alt + t</kbd>/<br><kbd>cmd + alt + r</kbd> | Task                    |
+| <kbd>ctrl + alt + u</kbd>/<br><kbd>cmd + alt + u</kbd> | Unordered List          |
+| <kbd>ctrl + alt + o</kbd>/<br><kbd>cmd + alt + o</kbd> | Ordered List            |
+| <kbd>ctrl + alt + q</kbd>/<br><kbd>cmd + alt + q</kbd> | BlockQuote              |
+| <kbd>ctrl + alt + h</kbd>/<br><kbd>cmd + alt + h</kbd> | Inline Code (highlight) |
+| <kbd>ctrl + alt + c</kbd>/<br><kbd>cmd + alt + c</kbd> | Code Block              |
+| <kbd>ctrl + alt + l</kbd>/<br><kbd>cmd + alt + l</kbd> | Horizontal Line         |
+| <kbd>ctrl + alt + n</kbd>/<br><kbd>cmd + alt + n</kbd> | Indent                  |
+| <kbd>ctrl + alt + m</kbd>/<br><kbd>cmd + alt + m</kbd> | Outdent                 |
 
 ## Acknowledgment
 
@@ -81,8 +82,16 @@ Have a look at our [contribution guide](./contributing.md).
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+\| \|
+\| \-\-\- \|
+\| \|
+\| \-\-\- \|
+\| \|
+\| \-\-\- \|
 
-<table><tbody><tr><td align="center"><a href="http://keshann93.github.io"><img src="https://avatars3.githubusercontent.com/u/12506034?v=4" width="100px;" alt=""><br>
+<table>|  |
+| --- |
+<tbody><tr><td align="center"><a href="http://keshann93.github.io"><img src="https://avatars3.githubusercontent.com/u/12506034?v=4" width="100px;" alt=""><br>
 <sub><b>Keshan Nageswaran</b></sub></a><a href="https://github.com/keshann93/semantic-live/commits?author=keshann93" title="Code">💻</a> <a href="#design-keshann93" title="Design">🎨</a></td></tr></tbody></table>
 
 ## License

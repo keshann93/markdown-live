@@ -42,10 +42,6 @@
           "dark": "./icons/icon-light.png",
           "light": "./icons/icon-dark.png"
         }
-      },
-      {
-        "command": "markdown-live.toggleMode",
-        "title": "Toggle Editor Mode"
       }
     ],
     "menus": {
@@ -414,8 +410,8 @@
       },
       {
         "command": "markdown-live.strike",
-        "key": "ctrl+alt+s",
-        "mac": "cmd+alt+s"
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
       },
       {
         "command": "markdown-live.task",
@@ -449,22 +445,18 @@
       },
       {
         "command": "markdown-live.indent",
-        "key": "",
-        "mac": ""
+        "key": "ctrl+alt+n",
+        "mac": "cmd+alt+n"
       },
       {
         "command": "markdown-live.outdent",
-        "key": "",
-        "mac": ""
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m"
       },
       {
         "command": "markdown-live.hr",
         "key": "ctrl+alt+l",
         "mac": "cmd+alt+l"
-      },
-      {
-        "command": "markdown-live.toggleMode",
-        "key": "ctrl+alt+m"
       }
     ]
   },
