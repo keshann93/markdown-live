@@ -42,17 +42,42 @@
           "dark": "./icons/icon-light.png",
           "light": "./icons/icon-dark.png"
         }
+      },
+      {
+        "command": "markdown-live.toggleScrollSync",
+        "title": "Toggle Scroll Sync"
       }
     ],
-    "menus": {
-      "editor/title": [
-        {
-          "when": "resourceLangId == markdown",
-          "command": "markdown-live.showMarkdown",
-          "alt": "markdown-live.showMarkdown",
-          "group": "navigation"
+    "configuration": {
+      "type": "object",
+      "title": "Markdown Live",
+      "properties": {
+        "markdown-live.automaticallyShowPreviewOfMarkdown": {
+          "description": "Automatically show preview of markdown being edited.",
+          "default": true,
+          "type": "boolean"
+        },
+        "markdown-live.scrollSync": {
+          "description": "Automatic scroll sync",
+          "default": true,
+          "type": "boolean"
+        },
+        "markdown-live.display2X": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Display toolbar buttons at 2X size"
+        },
+        "markdown-live.convertPastedImages": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Convert pasted images to local files"
+        },
+        "markdown-live.mediaFolder": {
+          "type": "string",
+          "default": ".media",
+          "markdownDescription": "The folder where images are saved relative to the note"
         }
-      ]
+      }
     },
     "colors": [
       {
@@ -362,101 +387,142 @@
         }
       }
     ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-live.showMarkdown",
+          "alt": "markdown-live.showMarkdown",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdown-live.showMarkdown",
+          "alt": "markdown-live.showMarkdown",
+          "group": "markdown-live"
+        }
+      ]
+    },
     "keybindings": [
+      {
+        "command": "markdown-live.showMarkdown",
+        "key": "ctrl+alt+v",
+        "mac": "cmd+alt+v",
+        "when": "editorLangId == markdown"
+      },
       {
         "command": "markdown-live.heading.1",
         "key": "ctrl+alt+1",
-        "mac": "cmd+alt+1"
+        "mac": "cmd+alt+1",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.heading.2",
         "key": "ctrl+alt+2",
-        "mac": "cmd+alt+2"
+        "mac": "cmd+alt+2",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.heading.3",
         "key": "ctrl+alt+3",
-        "mac": "cmd+alt+3"
+        "mac": "cmd+alt+3",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.heading.4",
         "key": "ctrl+alt+4",
-        "mac": "cmd+alt+4"
+        "mac": "cmd+alt+4",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.heading.5",
         "key": "ctrl+alt+5",
-        "mac": "cmd+alt+5"
+        "mac": "cmd+alt+5",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.heading.6",
         "key": "ctrl+alt+6",
-        "mac": "cmd+alt+6"
+        "mac": "cmd+alt+6",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.normal",
         "key": "ctrl+alt+0",
-        "mac": "cmd+alt+0"
+        "mac": "cmd+alt+0",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.bold",
         "key": "ctrl+alt+b",
-        "mac": "cmd+alt+b"
+        "mac": "cmd+alt+b",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.italic",
         "key": "ctrl+alt+i",
-        "mac": "cmd+alt+i"
+        "mac": "cmd+alt+i",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.strike",
         "key": "ctrl+alt+r",
-        "mac": "cmd+alt+r"
+        "mac": "cmd+alt+r",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.task",
         "key": "ctrl+alt+t",
-        "mac": "cmd+alt+t"
+        "mac": "cmd+alt+t",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.ul",
         "key": "ctrl+alt+u",
-        "mac": "cmd+alt+u"
+        "mac": "cmd+alt+u",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.ol",
         "key": "ctrl+alt+o",
-        "mac": "cmd+alt+o"
+        "mac": "cmd+alt+o",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.blockquote",
         "key": "ctrl+alt+q",
-        "mac": "cmd+alt+q"
+        "mac": "cmd+alt+q",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.code",
         "key": "ctrl+alt+h",
-        "mac": "cmd+alt+h"
+        "mac": "cmd+alt+h",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.codeblock",
         "key": "ctrl+alt+c",
-        "mac": "cmd+alt+c"
+        "mac": "cmd+alt+c",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.indent",
         "key": "ctrl+alt+n",
-        "mac": "cmd+alt+n"
+        "mac": "cmd+alt+n",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.outdent",
         "key": "ctrl+alt+m",
-        "mac": "cmd+alt+m"
+        "mac": "cmd+alt+m",
+        "when": "editorLangId == markdown"
       },
       {
         "command": "markdown-live.hr",
         "key": "ctrl+alt+l",
-        "mac": "cmd+alt+l"
+        "mac": "cmd+alt+l",
+        "when": "editorLangId == markdown"
       }
     ]
   },
