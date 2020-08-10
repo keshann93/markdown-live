@@ -53,7 +53,6 @@ class TuiEditor extends Component {
   constructor(props) {
     super(props);
     this.el = React.createRef();
-    this.previewElement = document.getElementById('root');
     this.handleResizeMessage = debounce(this.handleResizeMessage.bind(this), 1000);
     this.onHtmlBefore = this.onHtmlBefore.bind(this);
     this.onPreviewBeforeHook = this.onPreviewBeforeHook.bind(this);
@@ -61,11 +60,7 @@ class TuiEditor extends Component {
     this.contentSet = false;
     this.contentPath = null;
     this.wysiwygScroll = {};
-    this.currentLine = -1;
-    this.previewScrollDelay = 0;
-    this.scrollMap = [];
     this.uri = null;
-    this.visibleRange = {};
 
     this.state = {
       settings: {
@@ -141,10 +136,9 @@ class TuiEditor extends Component {
     // save the scroll positions
     if (this.state.editor.isWysiwygMode() && e.data) {
       this.wysiwygScroll[this.contentPath] = this.state.editor.getCurrentModeEditor().scrollTop();
-      this.visibleRange[this.contentPath] = this.state.editor.getCurrentModeEditor().getRange();
       window.vscode.postMessage({
         command: 'revealLine',
-        data: { uri: this.uri, line: this.visibleRange[this.contentPath] },
+        data: { uri: this.uri, line: this.wysiwygScroll[this.contentPath] },
       });
     }
   }
@@ -184,96 +178,23 @@ class TuiEditor extends Component {
   }
 
   setContent(data) {
-    console.log('set content reached');
     img_root = data.folderPath + '/';
     this.state.editor.setMarkdown(data.content, false);
     this.contentSet = true;
-    const isSamePath = this.contentPath === data.contentPath;
     this.contentPath = data.contentPath;
     this.uri = data.uri;
-    if (!isSamePath) {
-      const scrolls = this.state.editor.isWysiwygMode() ? this.wysiwygScroll : '';
-      let sTop = scrolls[this.contentPath];
-      if (!sTop) {
-        sTop = 0;
-      }
-      this.state.editor.getCurrentModeEditor().scrollTop(sTop);
-    }
   }
 
   changeTextEditorSelection(data) {
     if (this.state.settings.scrollSync) {
-      const line = parseInt(data.line, 10);
-      let topRatio = parseFloat(data.topRatio);
-      if (isNaN(topRatio)) {
-        topRatio = 0.372;
-      }
-      this.scrollToRevealSourceLine(line, topRatio);
-    }
-  }
-
-  scrollToRevealSourceLine(line, topRatio = 0.372) {
-    if (line === this.currentLine) {
-      return;
-    } else {
-      this.currentLine = line;
-    }
-
-    // disable preview onscroll
-    this.previewScrollDelay = Date.now() + 500;
-
-    this.scrollSyncToLine(line, topRatio);
-  }
-
-  scrollSyncToLine(line, topRatio = 0.372) {
-    if (line + 1 === this.totalLineCount) {
-      // last line
-      this.scrollToPos(this.previewElement.scrollHeight || 1);
-    } else {
-      this.scrollToPos(Math.max(this.previewElement.offsetHeight || 2 * topRatio, 0));
-    }
-  }
-
-  scrollToPos(scrollTop) {
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-      this.scrollTimeout = null;
-    }
-
-    if (scrollTop < 0) {
-      return;
-    }
-
-    const delay = 10;
-
-    const helper = (duration = 0) => {
-      this.scrollTimeout = setTimeout(() => {
-        if (duration <= 0) {
-          this.previewScrollDelay = Date.now() + 500;
-          this.previewElement.scrollTop = scrollTop;
-          this.wysiwygScroll[this.contentPath] = this.previewElement.scrollTop;
-          this.state.editor.getCurrentModeEditor().scrollTop(this.previewElement.scrollTop);
-          return;
+      const scrollToTop = () => {
+        const c = data.line;
+        if (c > 0) {
+          this.state.editor.getCurrentModeEditor().scrollTop((data.line - data.line / 50) * 25);
         }
-
-        const difference = scrollTop - this.previewElement.scrollTop;
-
-        const perTick = (difference / duration) * delay;
-
-        // disable preview onscroll
-        this.previewScrollDelay = Date.now() + 500;
-
-        this.previewElement.scrollTop += perTick;
-        if (this.previewElement.scrollTop === scrollTop) {
-          return;
-        }
-
-        helper(duration - delay);
-      }, delay);
-    };
-
-    const scrollDuration = 120;
-    helper(scrollDuration);
+      };
+      scrollToTop();
+    }
   }
 
   handleMessage(e) {
