@@ -50,26 +50,24 @@ Markdown-live supports the followings
 
 <img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/assets/markdown-live-demo2.gif">
 
-<br>
 ## Command Configurations
-<br>
-| Command | Description |
-| ------- | ----------- |
-| `showMarkdown` | Toggle Markdown panel |
+
+| Command            | Description             |
+| ------------------ | ----------------------- |
+| `showMarkdown`     | Toggle Markdown panel   |
 | `toggleScrollSync` | Toggle Scroll Sync Mode |
 
 - can be executed by opening the command pallete (ctr+shift+p) and type the command to select it and execute
 
 ## Workspace Configurations
 
-<br>
-| Name | Description | Default value |
-| ---- | ----------- | ------------- |
-| `automaticallyShowPreviewOfMarkdown` | Automatically shows preview once the markdown/.md file gets opened up | true(boolean) |
-| `syncScroll` | Automatically sync the scroll of both editor and doc | true(booelan) |
-| `display2X` | Display toolbar buttons of the editor at 2X size | false(boolean) |
-| `convertPastedImages` | Convert pasted images to local files, if not it will show in base64 format | true(boolean) |
-| `mediaFolder` | The folder where images are saved relative to the markdown file project folder | .media(string) |
+| Name                                 | Description                                                                    | Default value  |
+| ------------------------------------ | ------------------------------------------------------------------------------ | -------------- |
+| `automaticallyShowPreviewOfMarkdown` | Automatically shows preview once the markdown/.md file gets opened up          | true(boolean)  |
+| `syncScroll`                         | Automatically sync the scroll of both editor and doc                           | true(booelan)  |
+| `display2X`                          | Display toolbar buttons of the editor at 2X size                               | false(boolean) |
+| `convertPastedImages`                | Convert pasted images to local files, if not it will show in base64 format     | true(boolean)  |
+| `mediaFolder`                        | The folder where images are saved relative to the markdown file project folder | .media(string) |
 
 - above values are easily configurable through `File -> Preferrences -> settings`
 
