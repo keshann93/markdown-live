@@ -54,7 +54,7 @@
       "properties": {
         "markdown-live.automaticallyShowPreviewOfMarkdown": {
           "description": "Automatically shows preview once the markdown/.md file gets opened up",
-          "default": false,
+          "default": true,
           "type": "boolean"
         },
         "markdown-live.scrollSync": {
@@ -65,7 +65,7 @@
         "markdown-live.display2X": {
           "type": "boolean",
           "default": false,
-          "markdownDescription": "Display toolbar buttons at 2X size"
+          "markdownDescription": "Display toolbar buttons of the editor at 2X size"
         },
         "markdown-live.convertPastedImages": {
           "type": "boolean",

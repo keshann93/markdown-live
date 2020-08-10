@@ -97,11 +97,11 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   // list of vscode events that was used for extension and its subscriptions are below
-  let saveTextDocument = vscode.workspace.onDidSaveTextDocument(document => {
-    if (document) {
-      manager.textDocumentChange(document);
-    }
-  });
+  // let saveTextDocument = vscode.workspace.onDidSaveTextDocument(document => {
+  //   if (document) {
+  //     manager.textDocumentChange(document);
+  //   }
+  // });
 
   let textDocChange = vscode.workspace.onDidChangeTextDocument(({ document }) => {
     if (document) {
@@ -113,11 +113,11 @@ export function activate(context: vscode.ExtensionContext) {
     manager.updateConfiguration();
   });
 
-  let textEditorSelectionChange = vscode.window.onDidChangeTextEditorSelection(event => {
-    if (event) {
-      manager.textEditorSelectionChange(event);
-    }
-  });
+  // let textEditorSelectionChange = vscode.window.onDidChangeTextEditorSelection(event => {
+  //   if (event) {
+  //     manager.textEditorSelectionChange(event);
+  //   }
+  // });
 
   let visibleRangeChange = vscode.window.onDidChangeTextEditorVisibleRanges(event => {
     if (event) {
@@ -133,11 +133,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register commands/events
   context.subscriptions.push(markdownDisposable);
-  context.subscriptions.push(saveTextDocument);
   context.subscriptions.push(textDocChange);
   context.subscriptions.push(configChange);
   context.subscriptions.push(textEditorChange);
-  context.subscriptions.push(textEditorSelectionChange);
   context.subscriptions.push(visibleRangeChange);
   context.subscriptions.push(heading1);
   context.subscriptions.push(heading2);
