@@ -1,6 +1,9 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 
+/**
+ * Class that host the tui-editor as an external web content
+ */
 export default class ContentProvider {
   getNonce() {
     let text = '';

@@ -11,27 +11,28 @@ type SupportedFiletypes = 'markdown' | '';
 
 export default class Manager {
   // These are protected to allow unit test access because manager is extended
-  protected previewPanels: { [key: string]: vscode.WebviewPanel } = {};
+  private previewPanels: { [key: string]: vscode.WebviewPanel } = {};
   private preview2EditorMap: Map<vscode.WebviewPanel, vscode.TextEditor> = new Map();
-  protected context: vscode.ExtensionContext;
-  protected languageId: SupportedFiletypes = '';
-  protected editorScrollDelay = Date.now();
+  private context: vscode.ExtensionContext;
+  private editorScrollDelay = Date.now();
   private config: MarkdownLiveConfig;
   private imageToConvert: any = null;
-  protected changeFromEditor: boolean = false;
-  protected currentUri: any;
+  private changeFromEditor: boolean = false;
+  private currentUri: any;
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
     this.config = MarkdownLiveConfig.getCurrentConfig();
   }
 
+  // function handles when there is text change in the .md document
   textDocumentChange(document: vscode.TextDocument) {
     if (this.isAcceptableLaguage(document.languageId as SupportedFiletypes) && !this.changeFromEditor) {
       this.updateMarkdown(document);
     }
   }
 
+  // function handles when there is change in the workspace configuration defined
   updateConfiguration() {
     const newConfig = MarkdownLiveConfig.getCurrentConfig();
     if (!this.config.isEqualTo(newConfig)) {
@@ -40,6 +41,7 @@ export default class Manager {
     }
   }
 
+  // function handles when there is a change in the texteditor within vscode
   textEditorChange(textEditor: vscode.TextEditor) {
     if (this.isAcceptableLaguage(textEditor.document.languageId as SupportedFiletypes)) {
       const sourceUri = textEditor.document.uri;
@@ -52,6 +54,7 @@ export default class Manager {
     }
   }
 
+  // function handles when there is a visible range of text changes
   visibleRangeChange(event: vscode.TextEditorVisibleRangesChangeEvent) {
     const textEditor = event.textEditor as vscode.TextEditor;
     if (Date.now() < this.editorScrollDelay) {
@@ -80,6 +83,7 @@ export default class Manager {
     }
   }
 
+  // funciton handles when there is a text editor selection change
   textEditorSelectionChange(event: vscode.TextEditorSelectionChangeEvent) {
     if (this.isAcceptableLaguage(event.textEditor.document.languageId as SupportedFiletypes)) {
       const topLine: number = this.getTopVisibleLine(event.textEditor) || 0;
@@ -99,56 +103,31 @@ export default class Manager {
     }
   }
 
-  closePreviews() {
-    const previewPanels = [];
-    for (const key in this.previewPanels) {
-      if (this.previewPanels.hasOwnProperty(key)) {
-        const previewPanel = this.previewPanels[key];
-        if (previewPanel) {
-          previewPanels.push(previewPanel);
-        }
-      }
-    }
-
-    previewPanels.forEach(previewPanel => previewPanel.dispose());
-  }
-
-  toggleScrollSync() {
-    const config = vscode.workspace.getConfiguration('markdown-live');
-    const scrollSync = !config.get<boolean>('scrollSync');
-    config.update('scrollSync', scrollSync, true).then(() => {
-      this.updateConfiguration();
-      if (scrollSync) {
-        vscode.window.showInformationMessage('Scroll Sync is enabled');
-      } else {
-        vscode.window.showInformationMessage('Scroll Sync is disabled');
-      }
-    });
-  }
-
+  // function handles the acceptable lang check for text docs
   isAcceptableLaguage(languageId: SupportedFiletypes): boolean {
     return languageId === 'markdown';
   }
 
-  updateMarkdown(document: vscode.TextDocument): void {
-    if (document) {
-      const activeFileContent = document.getText();
-      this.previewPostMessage(document.uri, {
-        command: 'setContent',
-        content: activeFileContent,
-        folderPath: vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0].name,
-        contentPath: document.fileName,
-        uri: document.uri,
+  /** preview/ editor related supporting functionalities are implemented below */
+
+  // function that helps to enable the preview/editor side panel
+  enablePreview(uri?: vscode.Uri) {
+    let resource: any = uri;
+    if (!(resource instanceof vscode.Uri)) {
+      if (vscode.window.activeTextEditor) {
+        // we are relaxed and don't check for markdown files
+        resource = vscode.window.activeTextEditor.document.uri;
+      }
+    }
+    if (resource && vscode.window.activeTextEditor) {
+      this.initPreview(resource, vscode.window.activeTextEditor, {
+        viewColumn: vscode.ViewColumn.Two,
+        preserveFocus: true,
       });
     }
   }
 
-  refreshPreview(uri: Uri) {
-    const panel: vscode.WebviewPanel = this.getPreview(uri);
-    panel.dispose();
-    this.enablePreview(uri);
-  }
-
+  // function that initiates the preview/editor panel for a markdown doc
   initPreview(sourceUri: vscode.Uri, editor: vscode.TextEditor, viewOptions: { viewColumn: vscode.ViewColumn; preserveFocus?: boolean }) {
     let currentPanel: vscode.WebviewPanel | undefined = undefined;
     let rootPath: string = '';
@@ -187,7 +166,6 @@ export default class Manager {
               if (this.imageToConvert) {
                 const newContent = this.convertImage(message.data.content, this.imageToConvert, message.data.uri);
                 if (newContent) {
-                  // will be empty on error
                   message.data.content = newContent;
                 }
               }
@@ -208,7 +186,6 @@ export default class Manager {
               console.log('Unknown webview message received:');
               console.log(message);
           }
-          // manager.updateActiveBlock(message.prop, message.value, message.type);
         },
         undefined,
         this.context.subscriptions
@@ -230,6 +207,7 @@ export default class Manager {
     this.updateMarkdown(editor.document);
   }
 
+  // destroys the selected preview panel
   destroyPreview(sourceUri: Uri) {
     const previewPanel = this.getPreview(sourceUri);
     if (previewPanel) {
@@ -237,11 +215,77 @@ export default class Manager {
       delete this.previewPanels[sourceUri.fsPath];
     }
   }
+
+  // function that handles in closing all the preview panels/ editor panels
+  closePreviews() {
+    const previewPanels = [];
+    for (const key in this.previewPanels) {
+      if (this.previewPanels.hasOwnProperty(key)) {
+        const previewPanel = this.previewPanels[key];
+        if (previewPanel) {
+          previewPanels.push(previewPanel);
+        }
+      }
+    }
+
+    previewPanels.forEach(previewPanel => previewPanel.dispose());
+  }
+
+  // function that helps to refresh the preview of editor/preview panel
+  refreshPreview(uri: Uri) {
+    const panel: vscode.WebviewPanel = this.getPreview(uri);
+    panel.dispose();
+    this.enablePreview(uri);
+  }
+
+  // function that helps to retrieve the preview/editor panel instance
+  getPreview(sourceUri: Uri | undefined): vscode.WebviewPanel {
+    return this.previewPanels[(sourceUri && sourceUri.fsPath) || ''];
+  }
+
+  // function that helps to send/post messages to the preview panel
+  previewPostMessage(sourceUri: Uri | undefined, message: any) {
+    const preview = this.getPreview(sourceUri);
+    if (preview) {
+      preview.webview.postMessage(message);
+    }
+  }
+
+  // function that helps to send the updated doc content to the editor to render them properly
+  updateMarkdown(document: vscode.TextDocument): void {
+    if (document) {
+      const activeFileContent = document.getText();
+      this.previewPostMessage(document.uri, {
+        command: 'setContent',
+        content: activeFileContent,
+        folderPath: vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0].name,
+        contentPath: document.fileName,
+        uri: document.uri,
+      });
+    }
+  }
+
+  // function that helps to updated textdoc values when there is changes made in the editor/preview panel
+  async updateActiveBlock(value: string, uri: Uri) {
+    this.changeFromEditor = true;
+    const preview = this.getPreview(uri);
+    const activeTextEditor = this.preview2EditorMap.get(preview);
+    if (activeTextEditor && activeTextEditor.document.getText() !== value) {
+      const firstLine = activeTextEditor.document.lineAt(0);
+      const lastLine = activeTextEditor.document.lineAt(activeTextEditor.document.lineCount - 1);
+      const textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
+      await activeTextEditor.edit(editBuilder => {
+        editBuilder.replace(textRange, value);
+      });
+      this.changeFromEditor = false;
+    }
+  }
+
   /**
-   * Removes the given image data from the content,
-   * saves an image, puts a relative image path in its place
-   * @returns the new content, or blank if a failure happends
+   * Image handling related supporting functionalties are below
    */
+
+  //Removes the given image data from the content, saves an image, puts a relative image path in its place
   convertImage(content: any, image: any, uri: Uri) {
     const preview = this.getPreview(uri);
     const activeTextEditor = this.preview2EditorMap.get(preview);
@@ -284,6 +328,7 @@ export default class Manager {
     return content;
   }
 
+  // fn  to get the image index
   getNextImageIndex(folderPath: string | undefined) {
     let index = 0;
     const imgPrefix = 'img_';
@@ -305,6 +350,7 @@ export default class Manager {
     return index;
   }
 
+  // save image into the relative path defined
   saveMediaImage(folderPath: any, imgBuffer: Buffer, index: any, imgType: any) {
     let newIndex = index;
     const imgPrefix = 'img_';
@@ -339,48 +385,7 @@ export default class Manager {
     return `${this.config.mediaFolder}/${imgName}`;
   }
 
-  getPreview(sourceUri: Uri | undefined): vscode.WebviewPanel {
-    return this.previewPanels[(sourceUri && sourceUri.fsPath) || ''];
-  }
-
-  public previewPostMessage(sourceUri: Uri | undefined, message: any) {
-    const preview = this.getPreview(sourceUri);
-    if (preview) {
-      preview.webview.postMessage(message);
-    }
-  }
-
-  enablePreview(uri?: vscode.Uri) {
-    let resource: any = uri;
-    if (!(resource instanceof vscode.Uri)) {
-      if (vscode.window.activeTextEditor) {
-        // we are relaxed and don't check for markdown files
-        resource = vscode.window.activeTextEditor.document.uri;
-      }
-    }
-    if (resource && vscode.window.activeTextEditor) {
-      this.initPreview(resource, vscode.window.activeTextEditor, {
-        viewColumn: vscode.ViewColumn.Two,
-        preserveFocus: true,
-      });
-    }
-  }
-
-  async updateActiveBlock(value: string, uri: Uri) {
-    this.changeFromEditor = true;
-    const preview = this.getPreview(uri);
-    const activeTextEditor = this.preview2EditorMap.get(preview);
-    if (activeTextEditor && activeTextEditor.document.getText() !== value) {
-      const firstLine = activeTextEditor.document.lineAt(0);
-      const lastLine = activeTextEditor.document.lineAt(activeTextEditor.document.lineCount - 1);
-      const textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
-      await activeTextEditor.edit(editBuilder => {
-        editBuilder.replace(textRange, value);
-      });
-      this.changeFromEditor = false;
-    }
-  }
-
+  /** helper functions used for scroll related functionalities are below  */
   revealLine(uri: Uri, line: number) {
     const sourceUri = uri;
     line = line / 25;
@@ -401,12 +406,7 @@ export default class Manager {
       });
   }
 
-  /**
-   * Get the top-most visible range of `editor`.
-   *
-   * Returns a fractional line number based the visible character within the line.
-   * Floor to get real line number
-   */
+  //Get the top-most visible range of `editor`.
   getTopVisibleLine(editor: vscode.TextEditor): number | undefined {
     if (!editor['visibleRanges'].length) {
       return undefined;
@@ -419,12 +419,7 @@ export default class Manager {
     return lineNumber + progress;
   }
 
-  /**
-   * Get the bottom-most visible range of `editor`.
-   *
-   * Returns a fractional line number based the visible character within the line.
-   * Floor to get real line number
-   */
+  //Get the bottom-most visible range of `editor`
   getBottomVisibleLine(editor: vscode.TextEditor): number | undefined {
     if (!editor['visibleRanges'].length) {
       return undefined;
@@ -440,6 +435,22 @@ export default class Manager {
     return lineNumber + progress;
   }
 
+  // function that handles the toggleScrollSync command exec
+  toggleScrollSync() {
+    const config = vscode.workspace.getConfiguration('markdown-live');
+    const scrollSync = !config.get<boolean>('scrollSync');
+    config.update('scrollSync', scrollSync, true).then(() => {
+      this.updateConfiguration();
+      if (scrollSync) {
+        vscode.window.showInformationMessage('Scroll Sync is enabled');
+      } else {
+        vscode.window.showInformationMessage('Scroll Sync is disabled');
+      }
+    });
+  }
+
+  /** functions for shortcut related functionalities are below */
+  // shortcut execution
   hotkeyExec(args: any) {
     const panel: vscode.WebviewPanel = this.getPreview(this.currentUri);
     if (panel.active) {

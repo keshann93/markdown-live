@@ -8,13 +8,14 @@ import Manager from './Manager';
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "markdown-live" is now active!');
 
-  // Register our custom editor provider
-  // MarkdownLiveEditorProvider.register(context);
+  // initiate the manager who handles the logic of extension
   const manager = new Manager(context);
 
+  // list of commands and its definitions
   let markdownDisposable = vscode.commands.registerCommand('markdown-live.showMarkdown', () => {
     manager.enablePreview();
   });
+
   let heading1 = vscode.commands.registerCommand('markdown-live.heading.1', () => {
     manager.hotkeyExec(['Heading', 1]);
   });
@@ -95,8 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
     manager.toggleScrollSync();
   });
 
-  // event subscription
-
+  // list of vscode events that was used for extension and its subscriptions are below
   let saveTextDocument = vscode.workspace.onDidSaveTextDocument(document => {
     if (document) {
       manager.textDocumentChange(document);
@@ -131,7 +131,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
-  // Register commands
+  // Register commands/events
   context.subscriptions.push(markdownDisposable);
   context.subscriptions.push(saveTextDocument);
   context.subscriptions.push(textDocChange);
