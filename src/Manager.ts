@@ -18,40 +18,17 @@ export default class Manager {
   protected editorScrollDelay = Date.now();
   private config: MarkdownLiveConfig;
   private imageToConvert: any = null;
-  protected changeFromEditor: boolean = true;
+  protected changeFromEditor: boolean = false;
+  protected currentUri: any;
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
     this.config = MarkdownLiveConfig.getCurrentConfig();
-
-    // vscode.window.onDidChangeActiveTextEditor(activeEditor => {
-    //   const languageId = activeEditor ? activeEditor.document.languageId : undefined;
-    //   const sourceUri = activeEditor && activeEditor.document.uri;
-    //   const config = vscode.workspace.getConfiguration('markdown-live');
-    //   const automaticallyShowPreviewOfMarkdown = config.get<boolean>('automaticallyShowPreviewOfMarkdown');
-
-    //   if (languageId === 'markdown') {
-    //     this.activeEditor = activeEditor;
-    //     this.languageId = languageId;
-    //     if (automaticallyShowPreviewOfMarkdown) {
-    //       this.enablePreview(sourceUri);
-    //     }
-    //   }
-    // });
-
-    // vscode.window.onDidChangeTextEditorSelection(({ textEditor }) => {
-    //   if (textEditor && this.isAcceptableLaguage(textEditor.document.languageId as SupportedFiletypes)) {
-    //     this.activeEditor = textEditor;
-    //     // this.parseFromActiveEditor();
-    //   }
-    // });
   }
 
   textDocumentChange(document: vscode.TextDocument) {
     if (this.isAcceptableLaguage(document.languageId as SupportedFiletypes) && !this.changeFromEditor) {
       this.updateMarkdown(document);
-    } else {
-      this.changeFromEditor = !this.changeFromEditor;
     }
   }
 
@@ -105,14 +82,19 @@ export default class Manager {
 
   textEditorSelectionChange(event: vscode.TextEditorSelectionChangeEvent) {
     if (this.isAcceptableLaguage(event.textEditor.document.languageId as SupportedFiletypes)) {
-      const firstVisibleScreenRow: number = this.getTopVisibleLine(event.textEditor) || 0;
-      const lastVisibleScreenRow: number = this.getBottomVisibleLine(event.textEditor) || 0;
-      const topRatio = (event.selections[0].active.line - firstVisibleScreenRow) / (lastVisibleScreenRow - firstVisibleScreenRow);
-
+      const topLine: number = this.getTopVisibleLine(event.textEditor) || 0;
+      const bottomLine: number = this.getBottomVisibleLine(event.textEditor) || 0;
+      let midLine;
+      if (topLine === 0) {
+        midLine = 0;
+      } else if (Math.floor(bottomLine) === event.textEditor.document.lineCount - 1) {
+        midLine = bottomLine;
+      } else {
+        midLine = Math.floor((topLine + bottomLine) / 2);
+      }
       this.previewPostMessage(event.textEditor.document.uri, {
         command: 'changeTextEditorSelection',
-        line: event.selections[0].active.line,
-        topRatio,
+        line: midLine,
       });
     }
   }
@@ -159,7 +141,6 @@ export default class Manager {
         uri: document.uri,
       });
     }
-    this.changeFromEditor = false;
   }
 
   refreshPreview(uri: Uri) {
@@ -172,6 +153,7 @@ export default class Manager {
     let currentPanel: vscode.WebviewPanel | undefined = undefined;
     let rootPath: string = '';
     const contentProvider = new ContentProvider();
+    this.currentUri = sourceUri;
 
     if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length == 0) {
       rootPath = '';
@@ -218,7 +200,9 @@ export default class Manager {
               this.imageToConvert = message.data;
               break;
             case 'revealLine':
-              this.revealLine(message.data.uri, message.data.line);
+              if (this.config.scrollSync) {
+                this.revealLine(message.data.uri, message.data.line);
+              }
               break;
             default:
               console.log('Unknown webview message received:');
@@ -393,11 +377,13 @@ export default class Manager {
       await activeTextEditor.edit(editBuilder => {
         editBuilder.replace(textRange, value);
       });
+      this.changeFromEditor = false;
     }
   }
 
   revealLine(uri: Uri, line: number) {
     const sourceUri = uri;
+    line = line / 25;
 
     vscode.window.visibleTextEditors
       .filter(
@@ -454,7 +440,8 @@ export default class Manager {
     return lineNumber + progress;
   }
 
-  hotkeyExec(panel: vscode.WebviewPanel, args: any) {
+  hotkeyExec(args: any) {
+    const panel: vscode.WebviewPanel = this.getPreview(this.currentUri);
     if (panel.active) {
       panel.webview.postMessage({ command: 'exec', args });
     }
