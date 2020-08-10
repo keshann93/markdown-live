@@ -10,130 +10,89 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register our custom editor provider
   // MarkdownLiveEditorProvider.register(context);
-  let currentPanel: vscode.WebviewPanel | undefined = undefined;
   const manager = new Manager(context);
 
   let markdownDisposable = vscode.commands.registerCommand('markdown-live.showMarkdown', () => {
     manager.enablePreview();
   });
   let heading1 = vscode.commands.registerCommand('markdown-live.heading.1', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 1]);
-    }
+    manager.hotkeyExec(['Heading', 1]);
   });
 
   let heading2 = vscode.commands.registerCommand('markdown-live.heading.2', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 2]);
-    }
+    manager.hotkeyExec(['Heading', 2]);
   });
 
   let heading3 = vscode.commands.registerCommand('markdown-live.heading.3', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 3]);
-    }
+    manager.hotkeyExec(['Heading', 3]);
   });
 
   let heading4 = vscode.commands.registerCommand('markdown-live.heading.4', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 4]);
-    }
+    manager.hotkeyExec(['Heading', 4]);
   });
 
   let heading5 = vscode.commands.registerCommand('markdown-live.heading.5', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 5]);
-    }
+    manager.hotkeyExec(['Heading', 5]);
   });
 
   let heading6 = vscode.commands.registerCommand('markdown-live.heading.6', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Heading', 6]);
-    }
+    manager.hotkeyExec(['Heading', 6]);
   });
 
   let paragraph = vscode.commands.registerCommand('markdown-live.normal', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Paragraph']);
-    }
+    manager.hotkeyExec(['Paragraph']);
   });
 
   let bold = vscode.commands.registerCommand('markdown-live.bold', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Bold']);
-    }
+    manager.hotkeyExec(['Bold']);
   });
 
   let italic = vscode.commands.registerCommand('markdown-live.italic', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Italic']);
-    }
+    manager.hotkeyExec(['Italic']);
   });
 
   let strike = vscode.commands.registerCommand('markdown-live.strike', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Strike']);
-    }
+    manager.hotkeyExec(['Strike']);
   });
 
   let task = vscode.commands.registerCommand('markdown-live.task', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Task']);
-    }
+    manager.hotkeyExec(['Task']);
   });
 
   let ul = vscode.commands.registerCommand('markdown-live.ul', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['UL']);
-    }
+    manager.hotkeyExec(['UL']);
   });
 
   let ol = vscode.commands.registerCommand('markdown-live.ol', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['OL']);
-    }
+    manager.hotkeyExec(['OL']);
   });
 
   let blockQuote = vscode.commands.registerCommand('markdown-live.blockquote', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Blockquote']);
-    }
+    manager.hotkeyExec(['Blockquote']);
   });
 
   let code = vscode.commands.registerCommand('markdown-live.code', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Code']);
-    }
+    manager.hotkeyExec(['Code']);
   });
 
   let codeBlock = vscode.commands.registerCommand('markdown-live.codeblock', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['CodeBlock']);
-    }
+    manager.hotkeyExec(['CodeBlock']);
   });
 
   let indent = vscode.commands.registerCommand('markdown-live.indent', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Indent']);
-    }
+    manager.hotkeyExec(['Indent']);
   });
 
   let outdent = vscode.commands.registerCommand('markdown-live.outdent', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['Outdent']);
-    }
+    manager.hotkeyExec(['Outdent']);
   });
 
   let hr = vscode.commands.registerCommand('markdown-live.hr', () => {
-    if (currentPanel) {
-      manager.hotkeyExec(currentPanel, ['HR']);
-    }
+    manager.hotkeyExec(['HR']);
   });
 
   vscode.commands.registerCommand('markdown-live.toggleScrollSync', () => {
-    if (currentPanel) {
-      manager.toggleScrollSync();
-    }
+    manager.toggleScrollSync();
   });
 
   // event subscription
