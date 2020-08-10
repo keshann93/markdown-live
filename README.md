@@ -13,7 +13,7 @@
 
 - Markdown Live is an extension that provides you with many useful functionalities including a live editor with useful options
 - A lot of its ideas are inspired by [Markdown Preview Style](https://github.com/mjbvz/vscode-github-markdown-preview-style) and [Unotes](https://github.com/ryanmcalister/unotes).
-- Feel free to ask questions, [post issues](https://github.com/keshann93/markdown-live/issues), submit pull request, and request new features.
+- Feel free to ask questions, [post issues](https://github.com/keshann93/issues), submit pull request, and request new features.
 - For more information about this project and how to use this extension, please check out our Functionalities section⬇︎
 
 ## Features
@@ -25,7 +25,10 @@ Markdown-live supports the followings
 - 🌈 Supports rendering of multiple `.md` files
 - 🌏 Instantly syncs the changes made in either of two panels (markdown editor and text-document) across seamlessly
 - 🌟 Editor supports shortcut keys for the toolbar, please check the Keybindgs section for more information
-- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-1.2.0.vsix)](https://github.com/keshann93/markdown-live/master/markdown-live-1.1.0.vsix)
+- 🌟 Editor supports set a configurations defined, please check the Workspace configuration section for more information
+- 🌟 auto scroll syn support is been added
+- 🌟 copy & paste of image support is been additionally added along with other functionalities that comes with tui-editor
+- 💥 lightweight custom editor extension for markdown: [![Only 883 Kb](https://badge-size.herokuapp.com/keshann93/markdown-live/master/markdown-live-1.2.1.vsix)](https://github.com/keshann93/markdown-live/blob/master/markdown-live-1.2.1.vsix)
 - ⚡️ Check [tui.editor](https://github.com/nhn/tui.editor) for more information and config changes.
 
 ## Getting started
@@ -46,6 +49,29 @@ Markdown-live supports the followings
 ###### Multi Document Render Demo
 
 <img src="https://raw.githubusercontent.com/keshann93/markdown-live/master/assets/markdown-live-demo2.gif">
+
+<br>
+## Command Configurations
+<br>
+| Command | Description |
+| ------- | ----------- |
+| `showMarkdown` | Toggle Markdown panel |
+| `toggleScrollSync` | Toggle Scroll Sync Mode |
+
+- can be executed by opening the command pallete (ctr+shift+p) and type the command to select it and execute
+
+## Workspace Configurations
+
+<br>
+| Name | Description | Default value |
+| ---- | ----------- | ------------- |
+| `automaticallyShowPreviewOfMarkdown` | Automatically shows preview once the markdown/.md file gets opened up | true(boolean) |
+| `syncScroll` | Automatically sync the scroll of both editor and doc | true(booelan) |
+| `display2X` | Display toolbar buttons of the editor at 2X size | false(boolean) |
+| `convertPastedImages` | Convert pasted images to local files, if not it will show in base64 format | true(boolean) |
+| `mediaFolder` | The folder where images are saved relative to the markdown file project folder | .media(string) |
+
+- above values are easily configurable through `File -> Preferrences -> settings`
 
 ## Keybindings
 
@@ -77,7 +103,7 @@ Markdown-live supports the followings
 
 ## Changelog
 
-Please check the [Releases](./CHANGELOG.md) \| [Github](https://github.com/keshann93/markdown-live/releases) page of this project.
+Please check the [Releases](./CHANGELOG.md) \| [Github](https://github.com/keshann93/releases) page of this project.
 
 ## Contributing
 
@@ -86,15 +112,8 @@ Have a look at our [contribution guide](./contributing.md).
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-\| \|
-\| \-\-\- \|
-\| \|
-\| \-\-\- \|
-\| \|
-\| \-\-\- \|
 
-<table>|  |
-| --- |
+<table>
 <tbody><tr><td align="center"><a href="http://keshann93.github.io"><img src="https://avatars3.githubusercontent.com/u/12506034?v=4" width="100px;" alt=""><br>
 <sub><b>Keshan Nageswaran</b></sub></a><a href="https://github.com/keshann93/semantic-live/commits?author=keshann93" title="Code">💻</a> <a href="#design-keshann93" title="Design">🎨</a></td></tr></tbody></table>
 
