@@ -3,7 +3,7 @@
   "displayName": "Markdown Live",
   "description": "Real-time markdown Editor & Viewer",
   "publisher": "keshan",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "engines": {
     "vscode": "^1.44.0"
   },
@@ -45,7 +45,7 @@
       },
       {
         "command": "markdown-live.toggleScrollSync",
-        "title": "Toggle Scroll Sync"
+        "title": "Toggle Scroll Sync Mode"
       }
     ],
     "configuration": {
@@ -53,12 +53,12 @@
       "title": "Markdown Live",
       "properties": {
         "markdown-live.automaticallyShowPreviewOfMarkdown": {
-          "description": "Automatically show preview of markdown being edited.",
-          "default": true,
+          "description": "Automatically shows preview once the markdown/.md file gets opened up",
+          "default": false,
           "type": "boolean"
         },
         "markdown-live.scrollSync": {
-          "description": "Automatic scroll sync",
+          "description": "Automatically sync the scroll of both editor and doc",
           "default": true,
           "type": "boolean"
         },
@@ -69,13 +69,13 @@
         },
         "markdown-live.convertPastedImages": {
           "type": "boolean",
-          "default": false,
-          "markdownDescription": "Convert pasted images to local files"
+          "default": true,
+          "markdownDescription": "Convert pasted images to local files, if not it will show in base64 format"
         },
         "markdown-live.mediaFolder": {
           "type": "string",
           "default": ".media",
-          "markdownDescription": "The folder where images are saved relative to the note"
+          "markdownDescription": "The folder where images are saved relative to the markdown file project folder"
         }
       }
     },
