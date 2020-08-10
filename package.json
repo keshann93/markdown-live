@@ -408,121 +408,121 @@
         "command": "markdown-live.showMarkdown",
         "key": "ctrl+alt+v",
         "mac": "cmd+alt+v",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.1",
         "key": "ctrl+alt+1",
         "mac": "cmd+alt+1",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.2",
         "key": "ctrl+alt+2",
         "mac": "cmd+alt+2",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.3",
         "key": "ctrl+alt+3",
         "mac": "cmd+alt+3",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.4",
         "key": "ctrl+alt+4",
         "mac": "cmd+alt+4",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.5",
         "key": "ctrl+alt+5",
         "mac": "cmd+alt+5",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.heading.6",
         "key": "ctrl+alt+6",
         "mac": "cmd+alt+6",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.normal",
         "key": "ctrl+alt+0",
         "mac": "cmd+alt+0",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.bold",
         "key": "ctrl+alt+b",
         "mac": "cmd+alt+b",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.italic",
         "key": "ctrl+alt+i",
         "mac": "cmd+alt+i",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.strike",
         "key": "ctrl+alt+r",
         "mac": "cmd+alt+r",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.task",
         "key": "ctrl+alt+t",
         "mac": "cmd+alt+t",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.ul",
         "key": "ctrl+alt+u",
         "mac": "cmd+alt+u",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.ol",
         "key": "ctrl+alt+o",
         "mac": "cmd+alt+o",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.blockquote",
         "key": "ctrl+alt+q",
         "mac": "cmd+alt+q",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.code",
         "key": "ctrl+alt+h",
         "mac": "cmd+alt+h",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.codeblock",
         "key": "ctrl+alt+c",
         "mac": "cmd+alt+c",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.indent",
         "key": "ctrl+alt+n",
         "mac": "cmd+alt+n",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.outdent",
         "key": "ctrl+alt+m",
         "mac": "cmd+alt+m",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       },
       {
         "command": "markdown-live.hr",
         "key": "ctrl+alt+l",
         "mac": "cmd+alt+l",
-        "when": "editorLangId == markdown"
+        "when": "resourceLangId == markdown"
       }
     ]
   },
